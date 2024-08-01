@@ -1,0 +1,97 @@
+import { Conversation } from 'easemob';
+import { EMTextMessageBody } from 'easemob/src/main/cpp/types/libhyphenate';
+
+//全局公共样式
+@Styles
+function fillScreen() {
+  .width('100%')
+  .backgroundColor(Color.White)
+  .borderRadius(20)
+  .padding(10)
+}
+
+@Component
+export struct ConversationsItem {
+  @State item: Conversation | undefined = undefined;
+
+  getConversationsId() {
+    if (this.item) {
+      return this.item.conversationId()
+    }
+    return '';
+  }
+  getConversationsUnread() {
+    if (this.item) {
+      if (this.item.getUnreadMsgCount() > 0) {
+        return this.item.getUnreadMsgCount()
+      }
+    }
+    return '';
+  }
+
+  build() {
+    Row() {
+      Image($r("app.media.ease_default_avatar_1"))
+        .width(50)
+        .height(50)
+      Column({ space: 4 }) {
+        Row() {
+          Text(this.getConversationsId())
+            .fontSize(20)
+            .fontWeight(FontWeight.Bold)
+          Blank()
+          if (this.getConversationsUnread()>0){
+            Button() {
+              Text(this.getConversationsUnread() + "")
+                .fontColor(Color.White)
+                .align(Alignment.Center)
+
+            }
+            .width(18)
+            .height(18)
+            .type(ButtonType.Circle)
+            .backgroundColor(Color.Red)
+            .fontColor(Color.White)
+            .margin({ right: 55 })
+          }
+
+        }
+        .width('100%')
+
+        Row() {
+          if (this.item?.getLatestMessage()?.getType() === 0) {
+            Text((this.item?.getLatestMessage()?.getBody()?.getBody() as EMTextMessageBody).text())
+              .fontSize(20)
+              .fontWeight(FontWeight.Bold)
+          } else if (this.item?.getLatestMessage()?.getType() === 1) {
+            Text('[图片消息]')
+              .fontSize(20)
+              .fontWeight(FontWeight.Bold)
+          }
+
+          Blank()
+
+          Text(new Date(this.item?.getLatestMessage()?.getServerTimestamp()).getFullYear() + "年" +
+            (new Date(this.item?.getLatestMessage()?.getServerTimestamp()).getMonth() + 1 < 10 ?
+              '0' + (new Date(this.item?.getLatestMessage()?.getServerTimestamp()).getMonth() + 1) :
+              new Date(this.item?.getLatestMessage()?.getServerTimestamp()).getMonth() + 1) + "月" +
+            (new Date(this.item?.getLatestMessage()?.getServerTimestamp()).getDate() < 10 ?
+              '0' + (new Date(this.item?.getLatestMessage()?.getServerTimestamp()).getDate()) :
+            new Date(this.item?.getLatestMessage()?.getServerTimestamp()).getDate()) + "日"
+
+          )
+            .fontSize(10)
+            .align(Alignment.End)
+            .margin({ right: 50 })
+
+        }
+        .width('100%')
+
+      }
+
+      .alignItems(HorizontalAlign.Start)
+      .padding({ left: 10 })
+    }
+    .fillScreen()
+  }
+}

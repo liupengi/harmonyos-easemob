@@ -1,0 +1,48 @@
+{
+  "color": [
+    {
+      "name": "start_window_background",
+      "value": "#FFFFFF"
+    },
+    {
+      "name": "title",
+      "value": "#182431"
+    },
+    {
+      "name": "text_input_place_holder",
+      "value": "#99182431"
+    },
+    {
+      "name": "login_input_text_background",
+      "value": "#00FFFFFF"
+    },
+    {
+      "name": "input_border_color",
+      "value": "#33000000"
+    },
+    {
+      "name": "login_font_normal",
+      "value": "#66FFFFFF"
+    },
+    {
+      "name": "login_btn_enabled",
+      "value": "#007DFF"
+    },
+    {
+      "name": "login_btn_normal",
+      "value": "#66007DFF"
+    },
+    {
+      "name": "register_font_clickable",
+      "value": "#007DFF"
+    },
+    {
+      "name": "register_btn_clickable",
+      "value": "#0D000000"
+    },
+    {
+      "name": "ease_primary_50",
+      "value": "#33b1ff"
+    }
+  ]
+}
