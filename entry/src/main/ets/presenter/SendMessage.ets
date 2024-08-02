@@ -1,5 +1,4 @@
-import { ChatClient, ChatMessage, ChatCallback, ChatLog } from 'easemob'
-import media from '@ohos.multimedia.media';
+import { ChatClient, ChatMessage, ChatCallback, ChatLog, ConversationType, ChatType } from 'easemob'
 import { Context } from '@ohos.arkui.UIContext';
 import FsUtil from '../utils/GetThumbnail';
 
@@ -9,13 +8,17 @@ class SendMessages{
    * */
   sendTextMessage(conversationId:string,content:string): Promise<ChatMessage>{
     return new Promise((resolve,reject)=>{
-      let sendMessage :ChatMessage|undefined = ChatMessage.createTextSendMessage(conversationId, content);
-      if (!sendMessage) {
-        return
-      }
-      this.sendMessage(sendMessage).then((value)=>{
-        resolve(value)
-      })
+
+
+        let sendMessage :ChatMessage|undefined = ChatMessage.createTextSendMessage(conversationId, content);
+        if (!sendMessage) {
+          return
+        }
+        sendMessage.setChatType(ChatClient.getInstance().chatManager()?.getConversation(conversationId)?.getLatestMessage()?.getChatType())
+        this.sendMessage(sendMessage).then((value)=>{
+          resolve(value)
+        })
+
     })
 
   }
@@ -28,8 +31,7 @@ class SendMessages{
       if (!message) {
         return;
       }
-      message.setChatType(0);
-      message.getMsgId()
+      message.setChatType(ChatClient.getInstance().chatManager()?.getConversation(conversationId)?.getLatestMessage()?.getChatType());
       this.sendMessage(message).then((value)=>{
         resolve(value)
       })
@@ -50,7 +52,7 @@ class SendMessages{
             return;
           }
           // 会话类型，包含 `Chat`、`GroupChat` 和 `ChatRoom`，表示单聊、群聊或聊天室，默认为单聊。
-          message.setChatType(0);
+          message.setChatType(ChatClient.getInstance().chatManager()?.getConversation(conversationId)?.getLatestMessage()?.getChatType());
 
           this.sendMessage(message).then((value)=>{
             resolve(value)
@@ -76,7 +78,7 @@ class SendMessages{
             return;
           }
           // 会话类型，包含 `Chat`、`GroupChat` 和 `ChatRoom`，表示单聊、群聊或聊天室，默认为单聊。
-          message.setChatType(0);
+          message.setChatType(ChatClient.getInstance().chatManager()?.getConversation(conversationId)?.getLatestMessage()?.getChatType());
 
           this.sendMessage(message).then((value)=>{
             resolve(value)
@@ -111,6 +113,8 @@ class SendMessages{
 
 
   }
+
+
 
 }
 const sendMessages = new SendMessages()

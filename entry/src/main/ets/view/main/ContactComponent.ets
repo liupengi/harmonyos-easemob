@@ -68,6 +68,12 @@ export struct ContactComponent {
       .height(40)
       .justifyContent(FlexAlign.SpaceBetween)
       .padding({left:10,right:10})
+      .onClick(()=>{
+        router.pushUrl({
+          url: "pages/GroupListPage",
+
+        })
+      })
 
       List({ space: 8 }) {
         ForEach(

@@ -53,7 +53,7 @@ export struct ConversationsComponent {
           this.conversation,
           (items: Conversation) => {
             ListItem() {
-              ConversationsItem({ item: items })
+              ConversationsItem({ item: items})
 
             }
             .onClick(() => {

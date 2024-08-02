@@ -8,30 +8,34 @@ export struct Header {
 
   build() {
     //标题部分
-    Row() {
-      if (this.isReturn) {
-        Image($r('app.media.ease_default_navigation_icon'))
-          .width(30)
-          .onClick(() => {
-            router.back()
-          })
-      }
-      Text(this.title)
-        .fontSize(25)
-        .fontWeight(FontWeight.Bold)
-      Blank()
+    Column(){
+      Row() {
+        if (this.isReturn) {
+          Image($r('app.media.ease_default_navigation_icon'))
+            .width(30)
+            .onClick(() => {
+              router.back()
+            })
+        }
+        Text(this.title)
+          .fontSize(25)
+          .fontWeight(FontWeight.Bold)
+        Blank()
 
-      if (this.isAdd) {
-        Image($r('app.media.ease_icon_add'))
-          .width(40)
-          .height(40)
-          .onClick(() => {
+        if (this.isAdd) {
+          Image($r('app.media.ease_icon_add'))
+            .width(40)
+            .height(40)
+            .onClick(() => {
 
-          })
+            })
+        }
+
       }
+      .width('100%')
+      .height(30)
     }
-    .width('100%')
-    .height(30)
+
 
 
   }

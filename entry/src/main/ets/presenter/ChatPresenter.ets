@@ -2,6 +2,8 @@ import { ChatClient, ChatLog, ChatMessage, ChatMessageListener, ConnectionListen
 import UserInfo from '../utils/bean/UserInfo'
 import EaseConstant from '../utils/EaseConstant'
 import { EventBus } from '../utils/EventBus'
+import dataPreference from '@ohos.data.preferences'
+import { router } from '@kit.ArkUI'
 
 class ChatPresenter {
   private msgListener: ChatMessageListener | undefined
@@ -10,6 +12,7 @@ class ChatPresenter {
   ChatPresenter() {
     //添加消息监听
     this.onMessageListener()
+    //链接状态监听
     this.onConnectionListener()
 
 
@@ -40,6 +43,26 @@ class ChatPresenter {
       },
       onDisconnected: (errorCode: number): void => {
         // 长连接断开
+        if (errorCode === 206) {
+          ChatClient.getInstance().logout(true).then(()=>{
+            dataPreference.getPreferences(getContext(),'easemob')
+              .then( preferences=>{
+                {
+                  preferences.put("isAutoLogin", false).then(()=>{
+                    preferences.flush()
+                  })
+
+                }
+
+              }).catch( () =>{
+
+            })
+            router.replaceUrl({
+              url:"pages/Index",
+            })
+          })
+        }
+
       },
       onLogout: (errorCode: number, info: LoginExtInfo): void => {
         // 触发退出，需要主动调用 ChatClient#logout 方法

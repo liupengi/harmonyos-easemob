@@ -59,6 +59,7 @@ struct ChatPage {
 
       Header({ title: this.params['conversationId'] })
         .padding(20)
+
       List({ space: 8 }) {
         ForEach(
           this.messages,
@@ -67,11 +68,13 @@ struct ChatPage {
               // 消息item
               MessageTextItem({ data: item })
             }
+
           }
         )
       }
       .width('100%')
       .layoutWeight(1)
+
 
 
       Row() {

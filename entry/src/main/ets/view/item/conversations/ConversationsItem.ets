@@ -1,4 +1,5 @@
-import { Conversation } from 'easemob';
+import { it } from '@ohos/hypium';
+import { ChatClient, ChatLog, Conversation } from 'easemob';
 import { EMTextMessageBody } from 'easemob/src/main/cpp/types/libhyphenate';
 
 //全局公共样式
@@ -28,12 +29,26 @@ export struct ConversationsItem {
     }
     return '';
   }
+  getConversationsType() {
+    if (this.item) {
+      ChatLog.d("会话类型："+ChatClient.getInstance().chatManager()?.getConversation(this.item.conversationId())?.getType()+"====会话id："+ChatClient.getInstance().chatManager()?.getConversation(this.item.conversationId())?.conversationId())
+      return ChatClient.getInstance().chatManager()?.getConversation(this.item.conversationId())?.getType()
+    }
+    return '';
+  }
 
   build() {
     Row() {
-      Image($r("app.media.ease_default_avatar_1"))
-        .width(50)
-        .height(50)
+      if (this.getConversationsType()===0){
+        Image($r("app.media.ease_default_avatar_1"))
+          .width(50)
+          .height(50)
+      }else if (this.getConversationsType()===1){
+        Image($r("app.media.ease_default_group_avatar"))
+          .width(50)
+          .height(50)
+      }
+
       Column({ space: 4 }) {
         Row() {
           Text(this.getConversationsId())
