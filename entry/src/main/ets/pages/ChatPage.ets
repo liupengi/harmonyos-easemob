@@ -29,7 +29,7 @@ struct ChatPage {
   aboutToAppear(): void {
 
     ChatClient.getInstance().chatManager()?.getConversation(this.params['conversationId'], ConversationType.Chat,
-      false)?.loadMoreMessagesFromDB("", 20, SearchDirection.UP).then(messages => {
+      false)?.loadMoreMessagesFromDB("", 50, SearchDirection.UP).then(messages => {
       this.messages = messages
     })
 
@@ -71,7 +71,7 @@ struct ChatPage {
 
       Header({ title: this.params['conversationId'] })
         .padding(20)
-
+      Row(){}.width('100%').backgroundColor("#e7e9eb").height(1)
 
       List({ space: 8,scroller:this.scroller}) {
         ForEach(
@@ -97,6 +97,7 @@ struct ChatPage {
       .sticky(StickyStyle.Header)
       .onScrollIndex((start: number) => this.classifyChangeAction(start))
 
+      Row(){}.width('100%').backgroundColor("#e7e9eb").height(1)
       Row() {
         Image($r('app.media.ease_chatting_setmode_voice_btn_pressed'))
           .width(30)
@@ -151,6 +152,7 @@ struct ChatPage {
             })
         }
       }
+      .margin({top:10})
     }
   }
 }

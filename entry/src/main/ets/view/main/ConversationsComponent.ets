@@ -1,11 +1,13 @@
 import { Header } from '../Header'
-import { ChatClient, ChatMessageListener, Conversation, ChatMessage, ChatLog } from 'easemob'
+import { ChatClient, ChatMessageListener, Conversation, ChatMessage, ChatLog, ChatError,
+  UserInfoManager } from 'easemob'
 import { promptAction, router } from '@kit.ArkUI'
 import Conversations from '../../utils/Conversations'
 import { ConversationsItem } from '../item/conversations/ConversationsItem'
 import { EventBus } from '../../utils/EventBus'
 import EaseConstant from '../../utils/EaseConstant'
 import { ConversationsEventDialog } from '../dialog/ConversationsEventDialog'
+import UserInfoModel from '../../utils/db/UserInfoModel'
 
 @Entry
 @Component
@@ -15,8 +17,8 @@ export struct ConversationsComponent {
   @State conversation: Conversation[] = [];
   @Prop msgListener: ChatMessageListener
   @State isLongClick :boolean = false
-
   @State conversationId :string = ''
+  @State isLoad : boolean = true
 
   dialogController: CustomDialogController = new CustomDialogController({
     alignment: DialogAlignment.Bottom,
@@ -28,11 +30,15 @@ export struct ConversationsComponent {
       ChatLog.d("getConversations" + resolve.toString())
       this.conversation = resolve
     })
+
     EventBus.listen<string>(EaseConstant.connected_change, (data) => {
-      Conversations.getConversations().then(resolve => {
-        ChatLog.d("getConversations" + resolve.toString())
-        this.conversation = resolve
-      })
+      if (this.isLoad){
+        Conversations.getConversations().then(resolve => {
+          ChatLog.d("getConversations" + resolve.toString())
+          this.conversation = resolve
+        })
+      }
+
     })
     EventBus.listen<ChatMessage[]>(EaseConstant.message_change, (data) => {
       Conversations.getConversations().then(resolve => {
@@ -40,6 +46,7 @@ export struct ConversationsComponent {
         this.conversation = resolve
       })
     })
+
 
   }
 

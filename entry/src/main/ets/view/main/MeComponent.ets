@@ -15,30 +15,38 @@ import TimeConversion from '../../utils/TimeConversion'
 }
 @Component
 export struct MeComponent {
+  @State avatarUrl:string |undefined =''
 
+  @State nickname:string |undefined =''
 
   aboutToAppear(): void {
-
+    ChatClient.getInstance().userInfoManager()?.fetchUserInfoById(ChatClient.getInstance().getCurrentUser()).then((value)=>{
+      value.forEach((value)=>{
+       this.avatarUrl = value.avatarUrl
+       this.nickname = value.nickname
+      })
+    })
 
   }
 
   build() {
     Column(){
-      Row(){
-        Image($r("app.media.ease_default_avatar_1"))
-          .width(100)
-          .height(100)
-        Column({space:4}){
-          Text("")
-            .fontSize(20)
-            .fontWeight(FontWeight.Bold)
 
-
+        if (this.avatarUrl === undefined || this.avatarUrl === ''){
+          Image($r("app.media.ease_default_avatar_1"))
+            .width(100)
+            .height(100)
+        }else {
+          Image(this.avatarUrl)
+            .width(100)
+            .height(100)
         }
-        .alignItems(HorizontalAlign.Start)
-        .padding({left:10})
-      }
-      .fillScreen()
+        Text(this.nickname)
+          .margin({top:20})
+
+      Text("ID:"+ChatClient.getInstance().getCurrentUser())
+        .margin({top:20})
+
       Button('退出登录')
         .margin({top:300})
         .onClick(()=>{
@@ -64,19 +72,20 @@ export struct MeComponent {
 
           })
         })
-      Button('新增数据测试')
-
-        .onClick(()=>{
-
-          UserInfoModel.addUserInfo("p2","测试昵称1222","https://q4.itc.cn/q_70/images03/20240528/298d4abda5e4469d98fa77e7cde46525.jpeg")
-
-        })
-      Button('查询数据')
-
-        .onClick(async ()=>{
-
-        })
+      // Button('新增数据测试')
+      //
+      //   .onClick(()=>{
+      //
+      //     UserInfoModel.addUserInfo("p2","测试昵称1222","https://q4.itc.cn/q_70/images03/20240528/298d4abda5e4469d98fa77e7cde46525.jpeg")
+      //
+      //   })
+      // Button('查询数据')
+      //
+      //   .onClick(async ()=>{
+      //
+      //   })
     }
+    .alignItems(HorizontalAlign.Center)
 
 
   }

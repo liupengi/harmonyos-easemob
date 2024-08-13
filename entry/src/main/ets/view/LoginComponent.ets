@@ -1,6 +1,8 @@
 import {ChatClient, ChatError, ChatLog, ChatOptions} from "easemob";
 import router from '@ohos.router';
 import dataPreference from '@ohos.data.preferences'
+import { EventBus } from '../utils/EventBus';
+import EaseConstant from '../utils/EaseConstant';
 
 @Component
 export struct LoginComponent {
@@ -63,10 +65,11 @@ export struct LoginComponent {
         .onClick(() => {
 
             ChatClient.getInstance().login(this.userName,this.password).then(()=>{
-
               router.replaceUrl({
                 url:"pages/MainPage",
               })
+
+
 
               dataPreference.getPreferences(getContext(),'easemob')
                 .then( preferences=>{

@@ -28,7 +28,6 @@ struct MainPage {
         .margin({ top: 4 })
         .fontColor(this.currentIndex == targetIndex ? '#33b1ff' : '#999999')
     }
-    .backgroundColor("#EFEFEF")
     .width('100%')
     .height(60)
     .justifyContent(FlexAlign.Center)
@@ -53,27 +52,33 @@ struct MainPage {
       Tabs({ barPosition: BarPosition.End, controller: this.tabsController, index: 0 }) {
         TabContent() {
           if (this.show) {
-
             ConversationsComponent()
           }
 
         }
         .tabBar(this.TabBuilder('消息', 0, $r("app.media.em_main_tab_conversation"),
           $r("app.media.em_main_tab_conversation_selected")))
+        .borderWidth({bottom:1})
+        .borderColor("#e7e9eb")
 
         TabContent() {
           ContactComponent()
         }
         .tabBar(this.TabBuilder('通讯录', 1, $r("app.media.em_main_tab_friends"),
           $r("app.media.em_main_tab_friends_selected")))
+        .borderWidth({bottom:1})
+        .borderColor("#e7e9eb")
 
         TabContent() {
           MeComponent()
         }.tabBar(this.TabBuilder('我的', 2, $r("app.media.em_main_tab_me"), $r("app.media.em_main_tab_me_selected")))
+        .borderWidth({bottom:1})
+        .borderColor("#e7e9eb")
 
       }
       .scrollable(false) //去掉左右滑动的效果
       .animationDuration(0) //去掉左右滑动的动画
+
     }
     .backgroundColor(Color.White)
     .width('100%')

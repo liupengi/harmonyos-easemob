@@ -45,31 +45,51 @@ class UserInfoModel{
   /*
    * 查询
    * */
-  async getUserInfo(){
-    //1、构建查询条件
+   getUserInfo(userid :string){
     let predicates = new relationalStore.RdbPredicates(this.tableName)
-    //2、查询
-    let result = await this.rdbStore?.query(predicates, ['USERID', 'NICKNAME', 'AVATARURL'])
-    //3、解析查询
-    // 3.1 定义一个数字，组装查到的结果
-    let userInfo:UserInfo[] = []
-    //3.2 遍历封装
-    // 循环遍历结果集，判断是否遍历到最后一行
-    while (!result?.isAtLastRow){
-      //3.3  指针移动到下一行
-      result?.goToNextRow()
-      //3.4 获取数据
-      // 根据字段名获取字段index，从而获取字段值
-      let userid :string = result?.getString(result.getColumnIndex("USERID")) as string
-      let nickname :string = result?.getString(result.getColumnIndex("NICKNAME"))as string
-      let avatarurl :string= result?.getString(result.getColumnIndex("AVATARURL"))as string
 
-      //3.5 封装数组
-      userInfo.push({userid,nickname,avatarurl})
+    predicates.equalTo("USERID",userid)
 
-    }
-    console.log('UserInfoModel', '数据查询成功', JSON.stringify(userInfo))
-    return userInfo
+     this.rdbStore?.query(predicates, ['USERID', 'NICKNAME', 'AVATARURL']).then((resultSet)=>{
+      console.log("UserInfoModel" ,"resultSet columnCount:" + resultSet.rowCount);
+
+        //3.3  指针移动到下一行
+        resultSet?.goToNextRow()
+        // 根据字段名获取字段index，从而获取字段值
+        let getUserid :string = resultSet?.getString(resultSet.getColumnIndex("USERID")) as string
+        let getNickname :string = resultSet?.getString(resultSet.getColumnIndex("NICKNAME"))as string
+        let getAvatarurl :string= resultSet?.getString(resultSet.getColumnIndex("AVATARURL"))as string
+        console.log("UserInfoModel",getUserid+"---"+getNickname+"---"+getAvatarurl)
+      let userInfo:UserInfo = new UserInfo(getUserid,getNickname,getAvatarurl)
+       return userInfo
+
+    });
+    return ''
+
+    // //1、构建查询条件
+    // let predicates = new relationalStore.RdbPredicates(this.tableName)
+    // //2、查询
+    // let result = await this.rdbStore?.query(predicates, ['USERID', 'NICKNAME', 'AVATARURL'])
+    // //3、解析查询
+    // // 3.1 定义一个数字，组装查到的结果
+    // let userInfo:UserInfo[] = []
+    // //3.2 遍历封装
+    // // 循环遍历结果集，判断是否遍历到最后一行
+    // while (!result?.isAtLastRow){
+    //   //3.3  指针移动到下一行
+    //   result?.goToNextRow()
+    //   //3.4 获取数据
+    //   // 根据字段名获取字段index，从而获取字段值
+    //   let userid :string = result?.getString(result.getColumnIndex("USERID")) as string
+    //   let nickname :string = result?.getString(result.getColumnIndex("NICKNAME"))as string
+    //   let avatarurl :string= result?.getString(result.getColumnIndex("AVATARURL"))as string
+    //
+    //   //3.5 封装数组
+    //   userInfo.push({userid,nickname,avatarurl})
+    //
+    // }
+    // console.log('UserInfoModel', '数据查询成功', JSON.stringify(userInfo))
+
   }
 
   /*

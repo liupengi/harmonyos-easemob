@@ -1,6 +1,7 @@
 import { ChatMessage, TextMessageBody, ChatClient, ImageMessageBody, ChatCallback, ChatLog } from 'easemob';
 import { fileUri } from '@kit.CoreFileKit';
 import TimeConversion from '../../../utils/TimeConversion';
+import { router } from '@kit.ArkUI';
 
 //全局公共样式
 @Styles
@@ -51,6 +52,9 @@ export struct MessageImageItem {
           } else {
             Image((this.data?.getBody() as ImageMessageBody).getLocalPath())
               .VideoStyles()
+              .onClick(()=>{
+                this.ImageClick(true)
+              })
           }
           Text(this.getTime())
             .fontSize(12)
@@ -80,6 +84,9 @@ export struct MessageImageItem {
 
             Image(fileUri.getUriFromPath((this.data?.getBody() as ImageMessageBody).getThumbnailLocalPath()))
               .VideoStyles()
+              .onClick(()=>{
+                this.ImageClick(false)
+              })
 
           }
 
@@ -92,8 +99,16 @@ export struct MessageImageItem {
 
 
 
+
       }
       .fillScreen()
     }
   }
+   ImageClick(isSend:boolean) {
+     router.pushUrl({
+       url: "pages/BigShowPage",
+       params: { msgId: (this.data?.getMsgId()),isSend:isSend}
+     })
+  }
+
 }

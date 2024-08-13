@@ -3,6 +3,7 @@
     "pages/Index",
     "pages/MainPage",
     "pages/ChatPage",
-    "pages/GroupListPage"
+    "pages/GroupListPage",
+    "pages/BigShowPage"
   ]
 }

@@ -40,13 +40,12 @@ export struct MessageTextItem {
           Text(this.getText())
             .fontSize(15)
             .fontWeight(FontWeight.Bold)
-            .backgroundColor('#EFEFEF')
+            .backgroundColor('#e6f5ff')
             .padding(10)
           Text(this.getTime())
             .fontSize(12)
             .fontColor(Color.Gray)
         }
-
 
         Image($r("app.media.ease_default_avatar_1"))
           .width(35)
@@ -66,7 +65,7 @@ export struct MessageTextItem {
             .fontSize(15)
             .fontWeight(FontWeight.Bold)
             .textAlign(TextAlign.Start)
-            .backgroundColor('#EFEFEF')
+            .backgroundColor('#e6f5ff')
             .padding(10)
             .margin({ left: 10 })
           Text(this.getTime())
