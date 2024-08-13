@@ -6,13 +6,12 @@ import { AttachmentMessageDialog } from '../view/dialog/AttachmentMessageDialog'
 import { MessageTextItem } from '../view/item/messages/MessageTextItem'
 import  SendMessages from '../presenter/SendMessage'
 import {VoiceDialog} from '../view/dialog/VoiceDialog'
-import { init } from '../utils/AudioCapturer'
 import { checkAppPermissionOne } from '../utils/permissions/CheckAccess'
 import { common } from '@kit.AbilityKit'
 import { EventBus } from '../utils/EventBus'
 import EaseConstant from '../utils/EaseConstant'
-import UserInfo from '../utils/bean/UserInfo'
-import { systemDateTime } from '@kit.BasicServicesKit'
+import { MessageImageItem } from '../view/item/messages/MessageImageItem'
+import { MessageVideoItem } from '../view/item/messages/MessageVideoItem'
 
 @Entry
 @Component
@@ -24,6 +23,9 @@ struct ChatPage {
   @State isShowSend: boolean = false
   @State imgMessage: ChatMessage |undefined = undefined
   private context = getContext(this) as common.UIAbilityContext; //UIAbilityContext
+  private scroller: Scroller = new Scroller()
+  @State currentClassify: number = 0;
+  private  isClassify :boolean = true
   aboutToAppear(): void {
 
     ChatClient.getInstance().chatManager()?.getConversation(this.params['conversationId'], ConversationType.Chat,
@@ -32,6 +34,7 @@ struct ChatPage {
     })
 
     EventBus.listen<string>(EaseConstant.message_change,(messagesId) => {
+      this.scroller.scrollEdge(Edge.End)
       this.messages.push(ChatClient.getInstance().chatManager()?.getMessage(messagesId) as ChatMessage)
     })
     ChatClient.getInstance().chatManager()?.getConversation(this.params['conversationId'])?.markAllMessagesAsRead()
@@ -47,11 +50,20 @@ struct ChatPage {
   }
 
   onPageShow(): void {
+
     console.info("ChatPage========onPageShow========")
   }
   imgMsg = (chatMessage:ChatMessage)=>{
     this.messages.push(chatMessage)
+    this.scroller.scrollEdge(Edge.End)
     //this.customDialogController.close()
+  }
+
+  classifyChangeAction(index: number) {
+    if (this.isClassify) {
+      this.scroller.scrollEdge(Edge.End)
+      this.isClassify = false
+    }
   }
 
   build() {
@@ -60,13 +72,21 @@ struct ChatPage {
       Header({ title: this.params['conversationId'] })
         .padding(20)
 
-      List({ space: 8 }) {
+
+      List({ space: 8,scroller:this.scroller}) {
         ForEach(
           this.messages,
           (item: ChatMessage) => {
             ListItem() {
               // 消息item
-              MessageTextItem({ data: item })
+              if (item.getType() === 0) {
+                MessageTextItem({ data: item })
+              }else if (item.getType() === 1){
+                MessageImageItem({ data: item })
+              }else if (item.getType() === 2){
+                MessageVideoItem({ data: item })
+              }
+
             }
 
           }
@@ -74,8 +94,8 @@ struct ChatPage {
       }
       .width('100%')
       .layoutWeight(1)
-
-
+      .sticky(StickyStyle.Header)
+      .onScrollIndex((start: number) => this.classifyChangeAction(start))
 
       Row() {
         Image($r('app.media.ease_chatting_setmode_voice_btn_pressed'))
@@ -85,7 +105,7 @@ struct ChatPage {
             let res: boolean = await  checkAppPermissionOne(this.context)
             if (!res) return
 
-            init()
+
             let   customDialogController: CustomDialogController = new CustomDialogController({
               alignment: DialogAlignment.Bottom,
               builder: VoiceDialog({ conversationId: this.params['conversationId'], changeMessage: this.imgMsg })
@@ -102,6 +122,7 @@ struct ChatPage {
               this.isShowSend = true
             }
           })
+
         if (this.isShowSend) {
           Image($r('app.media.ease_chat_input_primary_send_icon'))
             .width(30)
@@ -111,6 +132,7 @@ struct ChatPage {
                     this.messages.push(new ChatMessage(value?.getObject() as EMMessage));
                     this.isShowSend = false
                     this.message = '';
+                    this.scroller.scrollEdge(Edge.End)
               })
 
             })

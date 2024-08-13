@@ -4,14 +4,15 @@ import { BusinessError } from '@kit.BasicServicesKit'
 
 class Notification{
   //构建发送通知
-  SendNotification(){
+
+  SendNotification(title:string,text:string){
     let request :notificationManager.NotificationRequest = {
       id: 1,
       content: {
         notificationContentType:notificationManager.ContentType.NOTIFICATION_CONTENT_BASIC_TEXT,
         normal:{
-          title:'测试标题',
-          text:"通知内容"
+          title:title,
+          text:text
         }
       }
     }

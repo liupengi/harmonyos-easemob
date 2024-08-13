@@ -60,6 +60,25 @@
           "abilities": ["EntryAbility"],
           "when": "always"
         }
+      },{
+        "name" : "ohos.permission.PERMISSION1",
+        "reason": "$string:app_name",
+        "usedScene": {
+          "abilities": [
+            "FormAbility"
+          ],
+          "when":"inuse"
+        }
+      },
+      {
+        "name" : "ohos.permission.PERMISSION2",
+        "reason": "$string:app_name",
+        "usedScene": {
+          "abilities": [
+            "FormAbility"
+          ],
+          "when":"always"
+        }
       }
       /*,
       {
@@ -120,6 +139,15 @@
             "resource": "$profile:backup_config"
           }
         ]
+      }
+    ],
+
+    // 配置如下信息
+    "metadata": [
+      {
+        "name": "client_id",
+        // 配置为步骤 1 中获取的 Client ID
+        "value": "111703463"
       }
     ]
   }

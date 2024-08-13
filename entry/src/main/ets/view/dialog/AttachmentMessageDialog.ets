@@ -27,34 +27,59 @@ export struct AttachmentMessageDialog {
   build() {
     Column() {
       Row(){
-        Image($r('app.media.ease_chat_image_pressed'))
-          .width(20)
-          .height(20)
-        Text("相册")
-          .margin({top:15})
-          .fontColor(0xacb4b9)
-          .padding({left:20})
-      }
-      .width('100%')
-      .padding(15)
-      .alignItems(VerticalAlign.Center)
-      .onClick(async () =>{this.photo()})
-      Row(){
         Image($r('app.media.ease_chat_takepic_pressed'))
           .width(20)
           .height(20)
         Text("相机")
-          .margin({top:10})
+          .fontColor('#33b1ff')
 
       }
+      .width('100%')
+      .padding({top:30,left:20,bottom:20})
       .onClick(async ()=>{this.camera()})
+      Row(){}.width('100%').backgroundColor("#e7e9eb").height(1)
+      Row(){
+        Image($r('app.media.ease_chat_image_pressed'))
+          .width(20)
+          .height(20)
+        Text("相册")
+          .fontColor('#33b1ff')
 
-      Text("视频")
-        .margin({top:10})
-        .onClick(async ()=>{ this.video()})
-      Button('关闭')
-        .width(200)
-        .margin({bottom:15,top:10})
+      }
+      .width('100%')
+      .padding({top:20,left:20,bottom:20})
+      .onClick(async () =>{this.photo()})
+      Row(){}.width('100%').backgroundColor("#e7e9eb").height(1)
+      Row(){
+        Image($r('app.media.em_chat_video_pressed'))
+          .width(20)
+          .height(20)
+        Text("视频")
+          .fontColor('#33b1ff')
+      }
+      .width('100%')
+      .padding({top:20,left:20,bottom:20})
+      .onClick(async ()=>{ this.video()})
+      Row(){}.width('100%').backgroundColor("#e7e9eb").height(1)
+      Row(){
+        Image($r('app.media.em_chat_card_normal'))
+          .width(20)
+          .height(20)
+        Text("名片")
+          .fontColor('#33b1ff')
+      }
+      .width('100%')
+      .padding({top:20,left:20,bottom:20})
+      .onClick( ()=>{
+
+      })
+      Row(){}.width('100%').backgroundColor("#e7e9eb").height(7)
+      Row(){
+        Text("取消")
+          .fontColor('#33b1ff')
+      }
+      .padding({top:20,left:20,bottom:20})
+
     }
     .width('100%')
 
@@ -123,7 +148,7 @@ export struct AttachmentMessageDialog {
 
 
           SendMessages.sendVideoMessage(this.conversationId+"", filePath,this.context).then((value)=>{
-            // this.changeMessage(value)
+             this.changeMessage(value)
           })
           console.log("PhotoSelectOptions",filePath)
 

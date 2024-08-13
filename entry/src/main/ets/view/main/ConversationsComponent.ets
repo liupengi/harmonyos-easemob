@@ -5,6 +5,7 @@ import Conversations from '../../utils/Conversations'
 import { ConversationsItem } from '../item/conversations/ConversationsItem'
 import { EventBus } from '../../utils/EventBus'
 import EaseConstant from '../../utils/EaseConstant'
+import { ConversationsEventDialog } from '../dialog/ConversationsEventDialog'
 
 @Entry
 @Component
@@ -13,6 +14,14 @@ export struct ConversationsComponent {
   @State list: Array<string> = [];
   @State conversation: Conversation[] = [];
   @Prop msgListener: ChatMessageListener
+  @State isLongClick :boolean = false
+
+  @State conversationId :string = ''
+
+  dialogController: CustomDialogController = new CustomDialogController({
+    alignment: DialogAlignment.Bottom,
+    builder: ConversationsEventDialog({conversationId:this.conversationId}),
+  })
 
   aboutToAppear(): void {
     Conversations.getConversations().then(resolve => {
@@ -61,28 +70,30 @@ export struct ConversationsComponent {
                 url: "pages/ChatPage",
                 params: { conversationId: items.conversationId() }
               })
-              promptAction.showToast({
-
-                message: "点击了" + items.conversationId() + "会话"
-              })
             })
-            .swipeAction({ end: this.DeleteButton(items.conversationId()) })
+
+            .gesture(
+              // 绑定可以重复触发的LongPressGesture
+              LongPressGesture({ repeat: true })
+                .onAction((event: GestureEvent|undefined) => {
+                  if (!this.isLongClick) {
+                    this.conversationId = items.conversationId()
+                    this.dialogController.open()
+                    this.isLongClick = true
+                  }
+
+                })
+                .onActionEnd(() => {
+                  this.isLongClick = false
+                })
+
+            )
 
           }
         )
       }
       .width('100%')
       .layoutWeight(1)
-      .onTouch((event?: TouchEvent) => {
-
-      })
-      .onReachEnd(() => {
-        console.log("到达了底部")
-        // this.conversation.forEach((value, index, array) => {
-        //   console.log("getConversations=============",value.conversationId())
-        //   value.conversationId()
-        // })
-      })
       .divider({
         strokeWidth:1,
         startMargin:55
@@ -92,21 +103,7 @@ export struct ConversationsComponent {
 
   }
 
-  @Builder
-  DeleteButton(index: string) {
-    Button() {
-      Text('删除')
-        .fontColor(Color.White)
-    }
-    .width(40)
-    .height(40)
-    .type(ButtonType.Normal)
-    .backgroundColor(Color.Red)
-    .margin(5)
-    .onClick(() => {
-      ChatClient.getInstance().chatManager()?.deleteConversation(index, true);
-    })
-  }
 }
+
 
 

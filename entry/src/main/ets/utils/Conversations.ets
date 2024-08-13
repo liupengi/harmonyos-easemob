@@ -2,7 +2,7 @@ import {Conversation,ChatClient, ChatLog}from 'easemob'
 class ConversationAll{
   getConversations():Promise<Conversation[]>{
     return new Promise((resolve,reject)=>{
-      let conversation =  ChatClient.getInstance().chatManager()?.getConversations() as Conversation[];
+      let conversation =  ChatClient.getInstance().chatManager()?.getAllConversationsBySort() as Conversation[];
       if (conversation.length>0) {
         conversation.forEach((value,index,array) => {
           ChatLog.d("未读数"+conversation[index].getUnreadMsgCount())

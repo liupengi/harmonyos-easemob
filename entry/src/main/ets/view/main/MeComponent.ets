@@ -1,8 +1,9 @@
-import { ChatCallback, ChatClient, ChatError} from 'easemob'
+import { ChatCallback, ChatClient, ChatError, ChatLog} from 'easemob'
 import UserInfoModel from '../../utils/db/UserInfoModel'
 import Notification from '../../utils/Notification'
 import dataPreference from '@ohos.data.preferences'
 import { router } from '@kit.ArkUI'
+import TimeConversion from '../../utils/TimeConversion'
 
 //全局公共样式
 @Styles function fillScreen(){
@@ -66,14 +67,13 @@ export struct MeComponent {
       Button('新增数据测试')
 
         .onClick(()=>{
+
           UserInfoModel.addUserInfo("p2","测试昵称1222","https://q4.itc.cn/q_70/images03/20240528/298d4abda5e4469d98fa77e7cde46525.jpeg")
 
         })
       Button('查询数据')
 
-        .onClick(()=>{
-          Notification.SendNotification()
-
+        .onClick(async ()=>{
 
         })
     }

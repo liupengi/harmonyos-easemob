@@ -11,18 +11,26 @@ function fillScreen() {
   .padding(10)
 }
 
+@Styles
+function VideoStyles() {
+  .width(180)
+  .height(180)
+  .margin({ left: 10 })
+}
+
 @Component
-export struct MessageTextItem {
+export struct MessageImageItem {
   @State data: ChatMessage | undefined = undefined;
+
   aboutToReuse(params: Record<string, Object>): void {
     this.data = params.data as ChatMessage;
   }
 
   getText() {
     if (this.data) {
-      let txtBody = this.data.getBody() as TextMessageBody;
+      let txtBody = this.data.getBody() as ImageMessageBody;
       if (txtBody) {
-        return txtBody.getContent();
+        return txtBody.getLocalPath();
       }
     }
     return '';
@@ -37,15 +45,18 @@ export struct MessageTextItem {
     if (this.data?.getFrom() === ChatClient.getInstance().getCurrentUser()) {
       Row() {
         Column(){
-          Text(this.getText())
-            .fontSize(15)
-            .fontWeight(FontWeight.Bold)
-            .backgroundColor('#EFEFEF')
-            .padding(10)
+          if ((this.data?.getBody() as ImageMessageBody).getLocalPath() === undefined) {
+            Image($r('app.media.ease_chat_image_normal'))
+              .VideoStyles()
+          } else {
+            Image((this.data?.getBody() as ImageMessageBody).getLocalPath())
+              .VideoStyles()
+          }
           Text(this.getTime())
             .fontSize(12)
             .fontColor(Color.Gray)
         }
+        .alignItems(HorizontalAlign.End)
 
 
         Image($r("app.media.ease_default_avatar_1"))
@@ -62,18 +73,23 @@ export struct MessageTextItem {
           .width(35)
           .height(35)
         Column(){
-          Text(this.getText())
-            .fontSize(15)
-            .fontWeight(FontWeight.Bold)
-            .textAlign(TextAlign.Start)
-            .backgroundColor('#EFEFEF')
-            .padding(10)
-            .margin({ left: 10 })
+          if ((this.data?.getBody() as ImageMessageBody).getThumbnailLocalPath() === undefined) {
+            Image($r('app.media.ease_chat_image_normal'))
+              .VideoStyles()
+          } else {
+
+            Image(fileUri.getUriFromPath((this.data?.getBody() as ImageMessageBody).getThumbnailLocalPath()))
+              .VideoStyles()
+
+          }
+
           Text(this.getTime())
             .fontSize(12)
             .fontColor(Color.Gray)
-
+            .margin({ left: 10 })
         }
+        .alignItems(HorizontalAlign.Start)
+
 
 
       }

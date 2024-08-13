@@ -1,6 +1,7 @@
 import { it } from '@ohos/hypium';
 import { ChatClient, ChatLog, Conversation } from 'easemob';
 import { EMTextMessageBody } from 'easemob/src/main/cpp/types/libhyphenate';
+import TimeConversion  from '../../../utils/TimeConversion';
 
 //全局公共样式
 @Styles
@@ -14,6 +15,7 @@ function fillScreen() {
 @Component
 export struct ConversationsItem {
   @State item: Conversation | undefined = undefined;
+  @State time :number|undefined  = undefined
 
   getConversationsId() {
     if (this.item) {
@@ -37,7 +39,17 @@ export struct ConversationsItem {
     return '';
   }
 
-  build() {
+
+  getTime(): string | undefined{
+    if (this.item){
+      return TimeConversion.getTime(this.item?.getLatestMessage()?.getServerTimestamp())
+  }
+    return ''
+}
+
+
+
+   build() {
     Row() {
       if (this.getConversationsType()===0){
         Image($r("app.media.ease_default_avatar_1"))
@@ -86,15 +98,7 @@ export struct ConversationsItem {
 
           Blank()
 
-          Text(new Date(this.item?.getLatestMessage()?.getServerTimestamp()).getFullYear() + "年" +
-            (new Date(this.item?.getLatestMessage()?.getServerTimestamp()).getMonth() + 1 < 10 ?
-              '0' + (new Date(this.item?.getLatestMessage()?.getServerTimestamp()).getMonth() + 1) :
-              new Date(this.item?.getLatestMessage()?.getServerTimestamp()).getMonth() + 1) + "月" +
-            (new Date(this.item?.getLatestMessage()?.getServerTimestamp()).getDate() < 10 ?
-              '0' + (new Date(this.item?.getLatestMessage()?.getServerTimestamp()).getDate()) :
-            new Date(this.item?.getLatestMessage()?.getServerTimestamp()).getDate()) + "日"
-
-          )
+          Text(this.getTime())
             .fontSize(10)
             .align(Alignment.End)
             .margin({ right: 50 })
