@@ -1,5 +1,5 @@
 import { Group } from 'easemob';
-import {BasicDataSource} from '../../base/BasicDataSource'
+import {BasicDataSource} from '../base/BasicDataSource'
 export  class GroupListDataSource extends BasicDataSource {
   private dataArray: Group[] = [];
 

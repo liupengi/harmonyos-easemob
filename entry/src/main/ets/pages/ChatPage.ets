@@ -129,7 +129,7 @@ struct ChatPage {
             .width(30)
             .height(30)
             .onClick(() => {
-              SendMessages.sendTextMessage(this.params['conversationId'], this.message).then((value)=>{
+              SendMessages.sendTextMessage(this.params['conversationId'], this.message,this.params['conversationType']).then((value)=>{
                     this.messages.push(new ChatMessage(value?.getObject() as EMMessage));
                     this.isShowSend = false
                     this.message = '';

@@ -2,7 +2,7 @@ import { ChatClient, ChatError, Contact, Group } from 'easemob'
 import { Header } from '../view/Header'
 import { router, promptAction } from '@kit.ArkUI'
 import { GroupListItem } from '../view/item/group/GroupListItem'
-import { GroupListDataSource } from '../utils/data/GroupListDataSource'
+import { GroupListDataSource } from '../data/GroupListDataSource'
 
 @Entry
 @Component
@@ -27,7 +27,7 @@ struct GroupListPage {
           .onClick(() => {
             router.pushUrl({
               url: "pages/ChatPage",
-              params: { conversationId: item.groupId() }
+              params: { conversationId: item.groupId(),conversationType: 1 }
             })
           })
         })

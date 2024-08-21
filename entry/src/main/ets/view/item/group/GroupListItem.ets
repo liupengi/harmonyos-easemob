@@ -14,23 +14,31 @@ function fillScreen() {
 export struct GroupListItem {
   @State item: Group | undefined = undefined;
 
-  getUserId() {
+  getGroupId() {
     if (this.item) {
       return this.item.groupId()
     }
     return '';
   }
 
-
+  getGroupName() {
+    if (this.item) {
+      return this.item.groupName()
+    }
+    return '';
+  }
   build() {
     Row() {
       Image($r("app.media.ease_default_group_avatar"))
         .width(50)
         .height(50)
       Column({ space: 4 }) {
-        Text(this.getUserId())
+        Text(this.getGroupName())
           .fontSize(20)
           .fontWeight(FontWeight.Bold)
+        Text(this.getGroupId())
+          .fontSize(15)
+
 
       }
       .alignItems(HorizontalAlign.Start)

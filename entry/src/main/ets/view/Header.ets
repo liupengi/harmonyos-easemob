@@ -1,4 +1,5 @@
 import router from '@ohos.router'
+import { AddContactDialog } from './dialog/AddContactDialog'
 
 @Component
 export struct Header {
@@ -27,7 +28,12 @@ export struct Header {
             .width(40)
             .height(40)
             .onClick(() => {
+              let   customDialogController: CustomDialogController = new CustomDialogController({
+                alignment: DialogAlignment.Center,
+                builder: AddContactDialog()
 
+              })
+                .open()
             })
         }
 

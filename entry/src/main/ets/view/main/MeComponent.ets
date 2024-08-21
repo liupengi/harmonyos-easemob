@@ -69,21 +69,37 @@ export struct MeComponent {
 
 
           }).catch((e:ChatError)=>{
+            if (e.errorCode === 201) {
+              dataPreference.getPreferences(getContext(),'easemob')
+                .then( preferences=>{
+                  {
+                    preferences.put("isAutoLogin", false).then(()=>{
+                      preferences.flush()
+                    })
 
+                  }
+
+                }).catch( () =>{
+
+              })
+              router.replaceUrl({
+                url:"pages/Index",
+              })
+            }
           })
         })
-      // Button('新增数据测试')
-      //
-      //   .onClick(()=>{
-      //
-      //     UserInfoModel.addUserInfo("p2","测试昵称1222","https://q4.itc.cn/q_70/images03/20240528/298d4abda5e4469d98fa77e7cde46525.jpeg")
-      //
-      //   })
-      // Button('查询数据')
-      //
-      //   .onClick(async ()=>{
-      //
-      //   })
+      Button('新增数据测试')
+
+        .onClick(()=>{
+
+          //UserInfoModel.addUserInfo("p2","测试昵称1222","https://q4.itc.cn/q_70/images03/20240528/298d4abda5e4469d98fa77e7cde46525.jpeg")
+          ChatClient.getInstance().userInfoManager()?.updateUserInfo({avatarUrl:"https://q4.itc.cn/q_70/images03/20240528/298d4abda5e4469d98fa77e7cde46525.jpeg",nickname:"测试设置的昵称"})
+        })
+      Button('查询数据')
+
+        .onClick(async ()=>{
+
+        })
     }
     .alignItems(HorizontalAlign.Center)
 

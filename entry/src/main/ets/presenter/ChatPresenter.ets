@@ -1,6 +1,8 @@
 import { ChatClient,
   ChatError,
-  ChatLog, ChatMessage, ChatMessageListener, ConnectionListener, LoginExtInfo,
+  ChatLog, ChatMessage, ChatMessageListener,
+  CmdMessageBody,
+  ConnectionListener, LoginExtInfo,
   PushListener,
   TextMessageBody} from 'easemob'
 import EaseConstant from '../utils/EaseConstant'
@@ -35,6 +37,13 @@ class ChatPresenter {
 
         })
       },
+      onCmdMessageReceived:(messages:ChatMessage[]):void=>{
+        messages.forEach((messages) => {
+          ChatLog.d("onCmdMessageReceived:==="+(messages.getBody() as CmdMessageBody).action())
+
+        })
+      }
+
 
     }
     ChatClient.getInstance().chatManager()?.addMessageListener(this.msgListener);

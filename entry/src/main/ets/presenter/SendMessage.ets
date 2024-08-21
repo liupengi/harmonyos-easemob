@@ -6,7 +6,7 @@ class SendMessages{
   /*
    * 发送文本消息
    * */
-  sendTextMessage(conversationId:string,content:string): Promise<ChatMessage>{
+  sendTextMessage(conversationId:string,content:string,conversationType:number): Promise<ChatMessage>{
     return new Promise((resolve,reject)=>{
 
 
@@ -14,7 +14,12 @@ class SendMessages{
         if (!sendMessage) {
           return
         }
-        sendMessage.setChatType(ChatClient.getInstance().chatManager()?.getConversation(conversationId)?.getLatestMessage()?.getChatType())
+        if (conversationType){
+          sendMessage.setChatType(1)
+        }else {
+          sendMessage.setChatType(ChatClient.getInstance().chatManager()?.getConversation(conversationId)?.getLatestMessage()?.getChatType())
+        }
+
         this.sendMessage(sendMessage).then((value)=>{
           resolve(value)
         })
@@ -62,7 +67,6 @@ class SendMessages{
       }catch (e){
         console.info(e, `release success.`)
       }
-
       })
 
   }
