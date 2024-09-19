@@ -2,8 +2,6 @@
 import { media } from '@kit.MediaKit';
 import { BusinessError, systemDateTime } from '@kit.BasicServicesKit';
 import fs from '@ohos.file.fs';
-import { abilityAccessCtrl, common, Permissions } from '@kit.AbilityKit';
-// https://developer.huawei.com/consumer/cn/doc/harmonyos-guides-V5/using-avrecorder-for-recording-V5
 class AudioRecorder {
   private avRecorder: media.AVRecorder | undefined = undefined;
   public maxAmplitude: number = 0;

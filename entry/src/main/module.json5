@@ -44,41 +44,6 @@
             "EntryAbility"
           ]
         }
-      },
-      {
-        "name": "ohos.permission.RECORD_AUDIO",
-        "reason": "$string:app_name",
-        "usedScene": {
-          "abilities": [ "EntryAbility"],
-          "when": "always"
-        }
-      },
-      {
-        "name": "ohos.permission.WRITE_MEDIA_STORAGE",
-        "reason": "$string:app_name",
-        "usedScene": {
-          "abilities": ["EntryAbility"],
-          "when": "always"
-        }
-      },{
-        "name" : "ohos.permission.PERMISSION1",
-        "reason": "$string:app_name",
-        "usedScene": {
-          "abilities": [
-            "FormAbility"
-          ],
-          "when":"inuse"
-        }
-      },
-      {
-        "name" : "ohos.permission.PERMISSION2",
-        "reason": "$string:app_name",
-        "usedScene": {
-          "abilities": [
-            "FormAbility"
-          ],
-          "when":"always"
-        }
       }
       /*,
       {

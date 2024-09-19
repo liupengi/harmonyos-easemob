@@ -1,4 +1,4 @@
-import fs, { Filter, ListFileOptions } from '@ohos.file.fs';
+import fs  from '@ohos.file.fs';
 import { media } from '@kit.MediaKit';
 import { image } from '@kit.ImageKit';
 import { Context } from '@ohos.arkui.UIContext';
