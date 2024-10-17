@@ -1,4 +1,4 @@
-import {ChatClient, ChatError, ChatLog, ChatOptions} from "easemob";
+import {ChatClient, ChatError, ChatLog, ChatOptions} from "@easemob/chatsdk";
 import router from '@ohos.router';
 import dataPreference from '@ohos.data.preferences'
 import { EventBus } from '../utils/EventBus';

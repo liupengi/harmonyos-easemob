@@ -1,4 +1,4 @@
-import {Conversation,ChatClient, ChatLog}from 'easemob'
+import {Conversation,ChatClient, ChatLog}from '@easemob/chatsdk'
 class ConversationAll{
   getConversations():Promise<Conversation[]>{
     return new Promise((resolve,reject)=>{

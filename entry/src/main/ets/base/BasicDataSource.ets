@@ -1,5 +1,5 @@
 // Basic implementation of IDataSource to handle data listener
-import { Group } from 'easemob';
+import { Group } from '@easemob/chatsdk';
 
 export  class BasicDataSource implements IDataSource {
   private listeners: DataChangeListener[] = [];
@@ -18,6 +18,7 @@ export  class BasicDataSource implements IDataSource {
     if (this.listeners.indexOf(listener) < 0) {
       console.info('add listener');
       this.listeners.push(listener);
+
     }
   }
 

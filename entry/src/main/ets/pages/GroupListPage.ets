@@ -1,4 +1,4 @@
-import { ChatClient, ChatError, Contact, Group } from 'easemob'
+import { ChatClient, ChatError, Contact, Group } from '@easemob/chatsdk'
 import { Header } from '../view/Header'
 import { router, promptAction } from '@kit.ArkUI'
 import { GroupListItem } from '../view/item/group/GroupListItem'

@@ -1,7 +1,7 @@
 import { it } from '@ohos/hypium';
-import { ChatClient, ChatLog, Conversation } from 'easemob';
-import { EMTextMessageBody } from 'easemob/src/main/cpp/types/libhyphenate';
+import { ChatClient, ChatLog, Conversation } from '@easemob/chatsdk';
 import TimeConversion  from '../../../utils/TimeConversion';
+import { EMTextMessageBody } from '@easemob/chatsdk/src/main/cpp/types/libhyphenate';
 
 //全局公共样式
 @Styles

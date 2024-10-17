@@ -4,7 +4,7 @@ import { common } from '@kit.AbilityKit';
 import camerapicker from '@ohos.multimedia.cameraPicker';
 import camera from '@ohos.multimedia.camera';
 import { BusinessError } from '@ohos.base';
-import { ChatMessage, } from 'easemob'
+import { ChatMessage, } from '@easemob/chatsdk'
 import  SendMessages from '../../presenter/SendMessage'
 //全局公共样式
 @Styles

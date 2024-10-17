@@ -1,8 +1,9 @@
 import { AbilityConstant, UIAbility, Want } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { window } from '@kit.ArkUI';
-import {ChatClient, ChatOptions} from 'easemob'
 import ChatPresenter from '../presenter/ChatPresenter';
+import { ChatOptions } from '@easemob/chatsdk';
+import { ChatClient } from '@easemob/chatsdk';
 
 export default class EntryAbility extends UIAbility {
 
@@ -10,7 +11,6 @@ export default class EntryAbility extends UIAbility {
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onCreate');
     let chatOption :ChatOptions = new ChatOptions("easemob-demo#support");
     chatOption.setAutoLogin(true);
-    chatOption.setAppIDForPush("111703463")
     ChatClient.getInstance().init(this.context,chatOption);
     ChatPresenter.ChatPresenter();
   }

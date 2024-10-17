@@ -2,7 +2,7 @@ import { ContactComponent } from '../view/main/ContactComponent'
 import { MeComponent } from '../view/main/MeComponent'
 import { ConversationsComponent } from '../view/main/ConversationsComponent'
 import UserInfoModel from '../utils/db/UserInfoModel'
-import { ChatClient, ChatLog } from 'easemob'
+import { ChatClient, ChatLog } from '@easemob/chatsdk'
 
 @Entry
 @Component
@@ -14,6 +14,7 @@ struct MainPage {
   aboutToAppear(): void {
 
     ChatLog.d("MainPage========aboutToAppear========")
+
     UserInfoModel.initUserInfoDB(getContext(), ChatClient.getInstance().getCurrentUser())
   }
 

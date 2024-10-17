@@ -1,5 +1,4 @@
-import { Contact, Conversation } from 'easemob';
-import { EMTextMessageBody } from 'easemob/src/main/cpp/types/libhyphenate';
+import { Contact, Conversation } from '@easemob/chatsdk';
 
 //全局公共样式
 @Styles

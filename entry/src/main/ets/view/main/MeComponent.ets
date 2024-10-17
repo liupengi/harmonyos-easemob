@@ -1,4 +1,4 @@
-import { ChatCallback, ChatClient, ChatError, ChatLog} from 'easemob'
+import { ChatCallback, ChatClient, ChatError, ChatLog} from '@easemob/chatsdk'
 import UserInfoModel from '../../utils/db/UserInfoModel'
 import Notification from '../../utils/Notification'
 import dataPreference from '@ohos.data.preferences'

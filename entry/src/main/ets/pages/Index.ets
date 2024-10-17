@@ -1,5 +1,4 @@
 import { LoginComponent } from '../view/LoginComponent';
-import { ChatClient, ChatOptions, ChatMessageListener, ChatMessage } from 'easemob'
 import dataPreference from '@ohos.data.preferences'
 import router from '@ohos.router';
 

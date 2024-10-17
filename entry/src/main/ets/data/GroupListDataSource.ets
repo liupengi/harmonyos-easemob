@@ -1,4 +1,4 @@
-import { Group } from 'easemob';
+import { Group } from '@easemob/chatsdk';
 import {BasicDataSource} from '../base/BasicDataSource'
 export  class GroupListDataSource extends BasicDataSource {
   private dataArray: Group[] = [];

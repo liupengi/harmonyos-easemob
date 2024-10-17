@@ -1,5 +1,5 @@
+import { ChatMessage } from '@easemob/chatsdk';
 import { emitter } from '@kit.BasicServicesKit';
-import { ChatMessage } from 'easemob/src/main/ets/message/ChatMessage';
 import UserInfo from '../utils/bean/UserInfo'
 /// 事件通知工具类
 export abstract class EventBus {

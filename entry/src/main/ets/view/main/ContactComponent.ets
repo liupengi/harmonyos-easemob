@@ -1,5 +1,5 @@
 import { Header } from '../Header'
-import { ChatClient, ChatError, ChatLog, Contact, Conversation } from 'easemob'
+import { ChatClient, ChatError, ChatLog, Contact, Conversation } from '@easemob/chatsdk'
 import { promptAction, router } from '@kit.ArkUI'
 import { ContactItem } from '../item/contact/ContactItem'
 

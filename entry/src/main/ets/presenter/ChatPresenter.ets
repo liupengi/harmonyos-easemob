@@ -4,7 +4,7 @@ import { ChatClient,
   CmdMessageBody,
   ConnectionListener, LoginExtInfo,
   PushListener,
-  TextMessageBody} from 'easemob'
+  TextMessageBody} from '@easemob/chatsdk'
 import EaseConstant from '../utils/EaseConstant'
 import { EventBus } from '../utils/EventBus'
 import dataPreference from '@ohos.data.preferences'

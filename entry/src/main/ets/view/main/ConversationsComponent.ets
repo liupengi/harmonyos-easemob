@@ -1,6 +1,6 @@
 import { Header } from '../Header'
 import { ChatClient, ChatMessageListener, Conversation, ChatMessage, ChatLog, ChatError,
-  UserInfoManager } from 'easemob'
+  UserInfoManager } from '@easemob/chatsdk'
 import { promptAction, router } from '@kit.ArkUI'
 import Conversations from '../../utils/Conversations'
 import { ConversationsItem } from '../item/conversations/ConversationsItem'

@@ -1,6 +1,5 @@
-import { EMClient, EMImageMessageBody, EMMessage, EMTextMessageBody } from 'easemob/src/main/cpp/types/libhyphenate'
 import { Header } from '../view/Header'
-import {ChatClient,ChatMessageListener,SearchDirection,ChatMessage,  ConversationType, ChatLog } from 'easemob'
+import {ChatClient,ChatMessageListener,SearchDirection,ChatMessage,  ConversationType, ChatLog } from '@easemob/chatsdk'
 import { router } from '@kit.ArkUI'
 import { AttachmentMessageDialog } from '../view/dialog/AttachmentMessageDialog'
 import { MessageTextItem } from '../view/item/messages/MessageTextItem'
@@ -12,6 +11,7 @@ import { EventBus } from '../utils/EventBus'
 import EaseConstant from '../utils/EaseConstant'
 import { MessageImageItem } from '../view/item/messages/MessageImageItem'
 import { MessageVideoItem } from '../view/item/messages/MessageVideoItem'
+import { EMMessage } from '@easemob/chatsdk/src/main/cpp/types/libhyphenate'
 
 @Entry
 @Component
