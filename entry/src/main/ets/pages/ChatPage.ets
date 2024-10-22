@@ -105,8 +105,6 @@ struct ChatPage {
           .onClick(async ()=>{
             let res: boolean = await  checkAppPermissionOne(this.context)
             if (!res) return
-
-
             let   customDialogController: CustomDialogController = new CustomDialogController({
               alignment: DialogAlignment.Bottom,
               builder: VoiceDialog({ conversationId: this.params['conversationId'], changeMessage: this.imgMsg })
