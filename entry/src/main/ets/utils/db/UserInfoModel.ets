@@ -2,6 +2,7 @@ import relationalStore from '@ohos.data.relationalStore';
 import { Context } from '@ohos.arkui.UIContext';
 import UserInfo from '../bean/UserInfo';
 import { ValuesBucket } from '@ohos.data.ValuesBucket';
+import { ChatClient } from '@easemob/chatsdk';
 
 
 class UserInfoModel{
@@ -153,7 +154,6 @@ class UserInfoModel{
     // 删除操作
     return this.rdbStore?.delete(predicates)
   }
-
 
 }
 

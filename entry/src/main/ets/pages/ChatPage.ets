@@ -1,10 +1,19 @@
 import { Header } from '../view/Header'
-import {ChatClient,ChatMessageListener,SearchDirection,ChatMessage,  ConversationType, ChatLog } from '@easemob/chatsdk'
+import {
+  ChatClient,
+  ChatMessageListener,
+  SearchDirection,
+  ChatMessage,
+  ConversationType,
+  ChatLog,
+  ChatCallbackHolder,
+  ChatCallback
+} from '@easemob/chatsdk'
 import { router } from '@kit.ArkUI'
 import { AttachmentMessageDialog } from '../view/dialog/AttachmentMessageDialog'
 import { MessageTextItem } from '../view/item/messages/MessageTextItem'
-import  SendMessages from '../presenter/SendMessage'
-import {VoiceDialog} from '../view/dialog/VoiceDialog'
+import SendMessages from '../presenter/SendMessage'
+import { VoiceDialog } from '../view/dialog/VoiceDialog'
 import { checkAppPermissionOne } from '../utils/permissions/CheckAccess'
 import { common } from '@kit.AbilityKit'
 import { EventBus } from '../utils/EventBus'
@@ -21,11 +30,12 @@ struct ChatPage {
   @State message: string = '';
   @Prop msgListener: ChatMessageListener
   @State isShowSend: boolean = false
-  @State imgMessage: ChatMessage |undefined = undefined
+  @State imgMessage: ChatMessage | undefined = undefined
   private context = getContext(this) as common.UIAbilityContext; //UIAbilityContext
   private scroller: Scroller = new Scroller()
   @State currentClassify: number = 0;
-  private  isClassify :boolean = true
+  private isClassify: boolean = true
+
   aboutToAppear(): void {
 
     ChatClient.getInstance().chatManager()?.getConversation(this.params['conversationId'], ConversationType.Chat,
@@ -33,7 +43,7 @@ struct ChatPage {
       this.messages = messages
     })
 
-    EventBus.listen<string>(EaseConstant.message_change,(messagesId) => {
+    EventBus.listen<string>(EaseConstant.message_change, (messagesId) => {
       this.scroller.scrollEdge(Edge.End)
       this.messages.push(ChatClient.getInstance().chatManager()?.getMessage(messagesId) as ChatMessage)
     })
@@ -53,7 +63,8 @@ struct ChatPage {
 
     console.info("ChatPage========onPageShow========")
   }
-  imgMsg = (chatMessage:ChatMessage)=>{
+
+  imgMsg = (chatMessage: ChatMessage) => {
     this.messages.push(chatMessage)
     this.scroller.scrollEdge(Edge.End)
     //this.customDialogController.close()
@@ -71,23 +82,43 @@ struct ChatPage {
 
       Header({ title: this.params['conversationId'] })
         .padding(20)
-      Row(){}.width('100%').backgroundColor("#e7e9eb").height(1)
+      Row() {
+      }.width('100%').backgroundColor("#e7e9eb").height(1)
 
-      List({ space: 8,scroller:this.scroller}) {
+      List({ space: 8, scroller: this.scroller }) {
         ForEach(
           this.messages,
           (item: ChatMessage) => {
             ListItem() {
-              // 消息item
               if (item.getType() === 0) {
                 MessageTextItem({ data: item })
-              }else if (item.getType() === 1){
+              } else if (item.getType() === 1) {
                 MessageImageItem({ data: item })
-              }else if (item.getType() === 2){
+              } else if (item.getType() === 2) {
                 MessageVideoItem({ data: item })
               }
 
             }
+            .onVisibleAreaChange([0.0, 1.0], (isVisible: boolean, currentRatio: number) => {
+              if (!isVisible) {
+                return
+              }
+              if (item.getType() === 1) {
+                let callback: ChatCallback = {
+                  onSuccess: (): void => {
+                    ChatLog.d("fetchHistoryMessages------->下载成功")
+                  },
+                  onError: (code: number, error: string): void => {
+                    ChatLog.d("fetchHistoryMessages------->下载失败" + code + "----" + error)
+                  },
+                  onProgress: (progress: number): void => {
+                    ChatLog.d("fetchHistoryMessages------->下载进度" + progress)
+                  }
+                }
+                item.setMessageStatusCallback(callback)
+                ChatClient.getInstance().chatManager()?.downloadThumbnail(item)
+              }
+            })
 
           }
         )
@@ -97,15 +128,19 @@ struct ChatPage {
       .sticky(StickyStyle.Header)
       .onScrollIndex((start: number) => this.classifyChangeAction(start))
 
-      Row(){}.width('100%').backgroundColor("#e7e9eb").height(1)
+      Row() {
+      }.width('100%').backgroundColor("#e7e9eb").height(1)
+
       Row() {
         Image($r('app.media.ease_chatting_setmode_voice_btn_pressed'))
           .width(30)
           .height(30)
-          .onClick(async ()=>{
-            let res: boolean = await  checkAppPermissionOne(this.context)
-            if (!res) return
-            let   customDialogController: CustomDialogController = new CustomDialogController({
+          .onClick(async () => {
+            let res: boolean = await checkAppPermissionOne(this.context)
+            if (!res) {
+              return
+            }
+            let customDialogController: CustomDialogController = new CustomDialogController({
               alignment: DialogAlignment.Bottom,
               builder: VoiceDialog({ conversationId: this.params['conversationId'], changeMessage: this.imgMsg })
 
@@ -127,12 +162,13 @@ struct ChatPage {
             .width(30)
             .height(30)
             .onClick(() => {
-              SendMessages.sendTextMessage(this.params['conversationId'], this.message,this.params['conversationType']).then((value)=>{
-                    this.messages.push(new ChatMessage(value?.getObject() as EMMessage));
-                    this.isShowSend = false
-                    this.message = '';
-                    this.scroller.scrollEdge(Edge.End)
-              })
+              SendMessages.sendTextMessage(this.params['conversationId'], this.message, this.params['conversationType'])
+                .then((value) => {
+                  this.messages.push(new ChatMessage(value?.getObject() as EMMessage));
+                  this.isShowSend = false
+                  this.message = '';
+                  this.scroller.scrollEdge(Edge.End)
+                })
 
             })
         } else {
@@ -141,16 +177,19 @@ struct ChatPage {
             .height(40)
             .onClick(() => {
 
-               let   customDialogController: CustomDialogController = new CustomDialogController({
+              let customDialogController: CustomDialogController = new CustomDialogController({
                 alignment: DialogAlignment.Bottom,
-                builder: AttachmentMessageDialog({ conversationId: this.params['conversationId'], changeMessage: this.imgMsg })
+                builder: AttachmentMessageDialog({
+                  conversationId: this.params['conversationId'],
+                  changeMessage: this.imgMsg
+                })
 
               })
                 .open()
             })
         }
       }
-      .margin({top:10})
+      .margin({ top: 10 })
     }
   }
 }

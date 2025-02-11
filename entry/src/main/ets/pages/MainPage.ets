@@ -65,6 +65,8 @@ struct MainPage {
 
         TabContent() {
           ContactComponent()
+
+
         }
         .tabBar(this.TabBuilder('通讯录', 1, $r("app.media.em_main_tab_friends"),
           $r("app.media.em_main_tab_friends_selected")))

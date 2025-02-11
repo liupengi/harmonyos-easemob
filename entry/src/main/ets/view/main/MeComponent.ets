@@ -1,9 +1,10 @@
-import { ChatCallback, ChatClient, ChatError, ChatLog} from '@easemob/chatsdk'
-import UserInfoModel from '../../utils/db/UserInfoModel'
-import Notification from '../../utils/Notification'
+import { ChatCallback, ChatClient, ChatError, ChatLog, ChatMessage,
+  ConversationType,
+  FetchMessageOption,
+  ImageMessageBody} from '@easemob/chatsdk'
 import dataPreference from '@ohos.data.preferences'
 import { router } from '@kit.ArkUI'
-import TimeConversion from '../../utils/TimeConversion'
+import { EMError } from '@easemob/chatsdk/src/main/cpp/types/libhyphenate/EMError'
 
 //全局公共样式
 @Styles function fillScreen(){
@@ -50,7 +51,7 @@ export struct MeComponent {
       Button('退出登录')
         .margin({top:300})
         .onClick(()=>{
-          ChatClient.getInstance().logout().then(()=>{
+          ChatClient.getInstance().logout(true).then(()=>{
             dataPreference.getPreferences(getContext(),'easemob')
               .then( preferences=>{
                 {
@@ -88,16 +89,68 @@ export struct MeComponent {
             }
           })
         })
-      Button('新增数据测试')
+      Button('下载缩略图')
 
         .onClick(()=>{
+          ChatClient.getInstance().chatManager()?.downloadThumbnail(ChatClient.getInstance().chatManager()?.getMessage("1366095022797096368"))
 
-          //UserInfoModel.addUserInfo("p2","测试昵称1222","https://q4.itc.cn/q_70/images03/20240528/298d4abda5e4469d98fa77e7cde46525.jpeg")
-          ChatClient.getInstance().userInfoManager()?.updateUserInfo({avatarUrl:"https://q4.itc.cn/q_70/images03/20240528/298d4abda5e4469d98fa77e7cde46525.jpeg",nickname:"测试设置的昵称"})
+
+          // let fetch :FetchMessageOption = new FetchMessageOption()
+          // fetch.setIsSave(true)
+          // ChatClient.getInstance().chatManager()?.fetchHistoryMessages("lihao123", ConversationType.Chat, 1, "",fetch).then((result) => {
+          //   let cursor = result.getNextCursor();
+          //   let list = result.getResult();
+          //   list.forEach((list) => {
+          //     if (list.getType() === 1) {
+          //       ChatLog.d("fetchHistoryMessages------->消息类型为图片类型")
+          //       let imageMessages :ImageMessageBody = (list.getBody() as ImageMessageBody)
+          //       let status =  imageMessages.getThumbnailDownloadStatus()
+          //       ChatLog.d("fetchHistoryMessages------->附件下载状态："+status)
+          //         let callback: ChatCallback = {
+          //           onSuccess: (): void => {
+          //             ChatLog.d("fetchHistoryMessages------->下载成功")
+          //           },
+          //           onError: (code: number, error: string): void => {
+          //             ChatLog.d("fetchHistoryMessages------->下载失败"+code+"----"+error)
+          //           },
+          //           onProgress: (progress: number): void => {
+          //             ChatLog.d("fetchHistoryMessages------->下载进度"+progress)
+          //           }
+          //         }
+          //         list.setMessageStatusCallback(callback);
+          //       ChatLog.d("fetchHistoryMessages22------->附件下载状态："+status)
+          //     }
+          //
+          //   })
+          // })
+
+
+
         })
-      Button('查询数据')
+      Button('下载原图')
 
         .onClick(async ()=>{
+          ChatClient.getInstance().chatManager()?.downloadAttachment(ChatClient.getInstance().chatManager()?.getMessage("1366095022797096368"))
+
+
+
+          // ChatClient.getInstance().logout(true).then(()=>{
+          //
+          // }).catch((error:EMError)=>{
+          //   error.errorCode
+          // })
+          //
+          //
+          //
+          // let message  = ChatMessage.createImageSendMessage("接收方id", "图片本地路径");
+          //
+          // let conversation = ChatClient.getInstance().chatManager()?.getConversation("会话id");
+          // if (!conversation) {
+          //   return;
+          // }
+          // conversation.insertMessage(message);
+          //
+          //
 
         })
     }

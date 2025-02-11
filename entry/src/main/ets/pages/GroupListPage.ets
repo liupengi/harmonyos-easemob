@@ -66,6 +66,7 @@ struct GroupListPage {
         this.isMore = false
       }
     }).catch((error:ChatError)=>{
+
     })
   }
 }

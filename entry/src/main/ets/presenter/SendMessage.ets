@@ -97,7 +97,16 @@ class SendMessages{
     return new Promise((resolve,reject)=>{
       let callback: ChatCallback = {
         onSuccess: (): void => {
+
           resolve(sendMessage)
+          let ext =  sendMessage.ext();
+          ext.forEach((value)=>{
+            ChatLog.d("getStatus=======onSuccess=========:" + value)
+          })
+
+
+
+
           ChatLog.d("getStatus=======onSuccess=========:" + sendMessage?.getStatus())
 
         },
@@ -111,6 +120,14 @@ class SendMessages{
           // 附件消息附件的上传进度
         }
       }
+      let attributes = new Map<string, MessageExtType>();
+      attributes.set("atMemberList", "[]");
+      attributes.set("em_push_category", "WORK");
+      attributes.set("innerId", "2b23222a-5865-4654-9f54-d3362fbcd6ed");
+      attributes.set("em_apns_ext","{\"em_huawei_push_badge_class\":\"com.hecom.hqpaas.rn.PaasReactIndexActivity\",\"em_push_mutable_content\":true}")
+      sendMessage.setExt(attributes);
+
+
       sendMessage.setMessageStatusCallback(callback);
       ChatClient.getInstance().chatManager()?.sendMessage(sendMessage);
     })
