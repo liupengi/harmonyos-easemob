@@ -70,6 +70,7 @@ class ChatPresenter {
         EventBus.send(EaseConstant.connected_change)
       },
       onDisconnected: (errorCode: number): void => {
+        ChatLog.d("onDisconnected--------->"+errorCode)
         // 长连接断开
         if (errorCode === ChatError.USER_LOGIN_ANOTHER_DEVICE) {
           AlertDialog.show(

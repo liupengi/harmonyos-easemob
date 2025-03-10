@@ -1,6 +1,6 @@
 import { AbilityConstant, UIAbility, Want } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
-import { window } from '@kit.ArkUI';
+import { router, window } from '@kit.ArkUI';
 import ChatPresenter from '../presenter/ChatPresenter';
 import { ChatLog, ChatOptions } from '@easemob/chatsdk';
 import { ChatClient } from '@easemob/chatsdk';
@@ -9,7 +9,7 @@ export default class EntryAbility extends UIAbility {
 
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onCreate');
-    let chatOption :ChatOptions = new ChatOptions("easemob-demo#support");
+    let chatOption :ChatOptions = new ChatOptions("1137220225110285#demo");
     chatOption.setAutoLogin(true);
     chatOption.setAutoDownloadThumbnail(true)
     chatOption.setAppIDForPush("111703463")
@@ -67,5 +67,15 @@ export default class EntryAbility extends UIAbility {
   onBackground(): void {
     // Ability has back to background
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onBackground');
+  }
+  onNewWant(want: Want, launchParam: AbilityConstant.LaunchParam): void {
+    //点击Notification通知并打开App的具体页面
+    let page = want?.parameters?.page  as string
+    router.pushUrl({
+      url:"pages/MainPage"
+    })
+    console.log('want参数'+want?.parameters?.page)
+
+
   }
 }

@@ -1,10 +1,12 @@
 import { ChatCallback, ChatClient, ChatError, ChatLog, ChatMessage,
   ConversationType,
   FetchMessageOption,
-  ImageMessageBody} from '@easemob/chatsdk'
+  ImageMessageBody,
+  UserInfo} from '@easemob/chatsdk'
 import dataPreference from '@ohos.data.preferences'
 import { router } from '@kit.ArkUI'
 import { EMError } from '@easemob/chatsdk/src/main/cpp/types/libhyphenate/EMError'
+import UserInfoModel from '../../utils/db/UserInfoModel'
 
 //全局公共样式
 @Styles function fillScreen(){
@@ -19,7 +21,7 @@ export struct MeComponent {
   @State avatarUrl:string |undefined =''
 
   @State nickname:string |undefined =''
-
+  @State  userIds : Array<string> = [];
   aboutToAppear(): void {
     ChatClient.getInstance().userInfoManager()?.fetchUserInfoById(ChatClient.getInstance().getCurrentUser()).then((value)=>{
       value.forEach((value)=>{
@@ -92,7 +94,40 @@ export struct MeComponent {
       Button('下载缩略图')
 
         .onClick(()=>{
-          ChatClient.getInstance().chatManager()?.downloadThumbnail(ChatClient.getInstance().chatManager()?.getMessage("1366095022797096368"))
+
+          // 获取一个或多个用户的所有属性，一次调用用户 ID 数量不超过 100。
+          let contact = ChatClient.getInstance().contactManager()?.getContactsFromLocal().then(result=>{
+            result.forEach((value)=>{
+              this.userIds.push(value.userId());
+            })
+
+          });
+
+
+
+          ChatClient.getInstance().userInfoManager()?.fetchUserInfoById(this.userIds).then(result => {
+            result.forEach((value) =>{
+
+              ChatLog.d(`获取头像昵称：${value.nickname}--------------${value.avatarUrl}`)
+
+              if (value.userId !== undefined && value.nickname !== undefined && value.avatarUrl !== undefined) {
+                UserInfoModel.addUserInfo(value.userId,value.nickname,value.avatarUrl)
+              }
+
+
+
+
+            })
+            // success logic
+          }).catch((e: ChatError) => {
+            // failure logic
+          });
+
+
+
+
+
+          // ChatClient.getInstance().chatManager()?.downloadThumbnail(ChatClient.getInstance().chatManager()?.getMessage("1366095022797096368"))
 
 
           // let fetch :FetchMessageOption = new FetchMessageOption()
