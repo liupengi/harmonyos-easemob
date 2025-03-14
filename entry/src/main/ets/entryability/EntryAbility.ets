@@ -9,7 +9,7 @@ export default class EntryAbility extends UIAbility {
 
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onCreate');
-    let chatOption :ChatOptions = new ChatOptions("1137220225110285#demo");
+    let chatOption :ChatOptions = new ChatOptions("easemob-demo#support");
     chatOption.setAutoLogin(true);
     chatOption.setAutoDownloadThumbnail(true)
     chatOption.setAppIDForPush("111703463")

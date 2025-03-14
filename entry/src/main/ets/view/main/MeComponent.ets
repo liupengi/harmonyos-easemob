@@ -1,7 +1,10 @@
 import { ChatCallback, ChatClient, ChatError, ChatLog, ChatMessage,
+  Conversation,
   ConversationType,
   FetchMessageOption,
+  Group,
   ImageMessageBody,
+  SearchDirection,
   UserInfo} from '@easemob/chatsdk'
 import dataPreference from '@ohos.data.preferences'
 import { router } from '@kit.ArkUI'
@@ -165,7 +168,30 @@ export struct MeComponent {
       Button('下载原图')
 
         .onClick(async ()=>{
-          ChatClient.getInstance().chatManager()?.downloadAttachment(ChatClient.getInstance().chatManager()?.getMessage("1366095022797096368"))
+          let fetchMessageOption :FetchMessageOption = new FetchMessageOption();
+          ChatClient.getInstance().chatManager()?.fetchHistoryMessages("wf1",ConversationType.Chat , 20, "", fetchMessageOption).then((result) => {
+            let cursor = result.getNextCursor();
+            let list = result.getResult();
+
+          })
+
+
+
+
+          // ChatClient.getInstance().chatManager()?.getConversation("wf1")?.loadMoreMessagesFromDB("", 50, SearchDirection.UP).then(messages => {
+          //   messages.forEach((message)=>{
+          //     ChatLog.d(`loadMoreMessagesFromDB------>${message.isReceiverRead()}`)
+          //   })
+          // })
+
+
+
+
+
+          // let group :Group|undefined = ChatClient.getInstance().groupManager()?.getGroup("241407257280524");
+          // ChatLog.d(group?.groupName())
+          // ChatLog.d(group?.groupId())
+          //ChatClient.getInstance().chatManager()?.downloadAttachment(ChatClient.getInstance().chatManager()?.getMessage("1366095022797096368"))
 
 
 

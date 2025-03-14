@@ -57,7 +57,14 @@ class ChatPresenter {
       onMessageContentChanged:(messages:ChatMessage,operatorId:string,operationTime:number):void =>{
         ChatLog.d("onMessageContentChanged:==="+messages.toString()+"------"+operatorId)
 
-      }
+      },
+
+      onMessageRead: (messages: ChatMessage[]): void => {
+        messages.forEach((message) =>{
+          ChatLog.d(`messages---->${message.isReceiverRead()}`)
+        })
+
+      },
     }
     ChatClient.getInstance().chatManager()?.addMessageListener(this.msgListener);
   }
