@@ -70,7 +70,6 @@ export struct ConversationsComponent {
           (items: Conversation) => {
             ListItem() {
               ConversationsItem({ item: items})
-
             }
             .onClick(() => {
               router.pushUrl({

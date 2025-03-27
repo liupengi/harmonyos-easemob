@@ -58,24 +58,21 @@ struct MainPage {
           }
 
         }
-        .tabBar(this.TabBuilder('消息', 0, $r("app.media.em_main_tab_conversation"),
-          $r("app.media.em_main_tab_conversation_selected")))
+        .tabBar(this.TabBuilder('消息', 0, $r("app.media.em_main_tab_conversation"), $r("app.media.em_main_tab_conversation_selected")))
         .borderWidth({bottom:1})
         .borderColor("#e7e9eb")
 
         TabContent() {
           ContactComponent()
-
-
         }
-        .tabBar(this.TabBuilder('通讯录', 1, $r("app.media.em_main_tab_friends"),
-          $r("app.media.em_main_tab_friends_selected")))
+        .tabBar(this.TabBuilder('通讯录', 1, $r("app.media.em_main_tab_friends"), $r("app.media.em_main_tab_friends_selected")))
         .borderWidth({bottom:1})
         .borderColor("#e7e9eb")
 
         TabContent() {
           MeComponent()
-        }.tabBar(this.TabBuilder('我的', 2, $r("app.media.em_main_tab_me"), $r("app.media.em_main_tab_me_selected")))
+        }
+        .tabBar(this.TabBuilder('我的', 2, $r("app.media.em_main_tab_me"), $r("app.media.em_main_tab_me_selected")))
         .borderWidth({bottom:1})
         .borderColor("#e7e9eb")
 

@@ -27,7 +27,6 @@ class ChatPresenter {
     this.onConnectionListener()
 
     this.onPushListener()
-
     //会话列表监听
     this.onConversationsListener()
 
@@ -118,11 +117,6 @@ class ChatPresenter {
               }
             }
           )
-
-
-
-
-
         }
 
       },
