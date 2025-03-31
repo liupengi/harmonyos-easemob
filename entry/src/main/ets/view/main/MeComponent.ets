@@ -5,10 +5,9 @@ import { ChatCallback, ChatClient, ChatError, ChatLog, ChatMessage,
   Group,
   ImageMessageBody,
   SearchDirection,
-  UserInfo} from '@easemob/chatsdk'
+  UserInfo} from '@easemob/chatuikit'
 import dataPreference from '@ohos.data.preferences'
 import { router } from '@kit.ArkUI'
-import { EMError } from '@easemob/chatsdk/src/main/cpp/types/libhyphenate/EMError'
 import UserInfoModel from '../../utils/db/UserInfoModel'
 
 //全局公共样式

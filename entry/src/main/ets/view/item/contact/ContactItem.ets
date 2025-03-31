@@ -1,4 +1,4 @@
-import { Contact, Conversation } from '@easemob/chatsdk';
+import { Contact, Conversation } from '@easemob/chatuikit';
 
 //全局公共样式
 @Styles

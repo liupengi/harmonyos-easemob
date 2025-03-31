@@ -1,5 +1,5 @@
 import { common } from '@kit.AbilityKit';
-import { ChatClient, ChatError, ChatMessage, } from '@easemob/chatsdk'
+import { ChatClient, ChatError, ChatMessage, } from '@easemob/chatuikit'
 import EaseConstant from '../../utils/EaseConstant';
 import { EventBus } from '../../utils/EventBus';
 

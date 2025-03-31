@@ -1,4 +1,4 @@
-import { ChatClient, ChatMessage, ChatCallback, ChatLog, ConversationType, ChatType, MessageExtType } from '@easemob/chatsdk'
+import { ChatClient, ChatMessage, ChatCallback, ChatLog, ConversationType, ChatType, MessageExtType } from '@easemob/chatuikit'
 import { Context } from '@ohos.arkui.UIContext';
 import FsUtil from '../utils/GetThumbnail';
 

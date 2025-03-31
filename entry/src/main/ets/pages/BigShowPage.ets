@@ -1,6 +1,6 @@
 import { router } from '@kit.ArkUI'
 import { fileUri } from '@kit.CoreFileKit';
-import { ChatClient, ChatLog, ImageMessageBody } from '@easemob/chatsdk';
+import { ChatClient, ChatLog, ImageMessageBody } from '@easemob/chatuikit';
 
 @Entry
 @Component

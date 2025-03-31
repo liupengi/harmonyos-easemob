@@ -2,7 +2,7 @@ import relationalStore from '@ohos.data.relationalStore';
 import { Context } from '@ohos.arkui.UIContext';
 import UserInfo from '../bean/UserInfo';
 import { ValuesBucket } from '@ohos.data.ValuesBucket';
-import { ChatClient } from '@easemob/chatsdk';
+import { ChatClient } from '@easemob/chatuikit';
 
 
 class UserInfoModel{

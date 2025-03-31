@@ -5,8 +5,6 @@
   "main": "",
   "author": "",
   "license": "",
-  "dependencies": {
-    "@easemob/chatsdk": "file:./libs/chatsdk-1.5.1.har",
-  }
+
 }
 

@@ -1,5 +1,5 @@
 import notificationManager from '@ohos.notificationManager'
-import { ChatLog } from '@easemob/chatsdk'
+import { ChatLog } from '@easemob/chatuikit'
 import { BusinessError } from '@kit.BasicServicesKit'
 
 class Notification{

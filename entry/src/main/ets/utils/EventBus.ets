@@ -1,4 +1,4 @@
-import { ChatMessage } from '@easemob/chatsdk';
+import { ChatMessage } from '@easemob/chatuikit';
 import { emitter } from '@kit.BasicServicesKit';
 import UserInfo from '../utils/bean/UserInfo'
 /// 事件通知工具类

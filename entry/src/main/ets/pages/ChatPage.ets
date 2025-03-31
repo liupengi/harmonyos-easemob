@@ -8,7 +8,7 @@ import {
   ChatLog,
   ChatCallbackHolder,
   ChatCallback
-} from '@easemob/chatsdk'
+} from '@easemob/chatuikit'
 import { router } from '@kit.ArkUI'
 import { AttachmentMessageDialog } from '../view/dialog/AttachmentMessageDialog'
 import { MessageTextItem } from '../view/item/messages/MessageTextItem'
@@ -20,7 +20,6 @@ import { EventBus } from '../utils/EventBus'
 import EaseConstant from '../utils/EaseConstant'
 import { MessageImageItem } from '../view/item/messages/MessageImageItem'
 import { MessageVideoItem } from '../view/item/messages/MessageVideoItem'
-import { EMMessage } from '@easemob/chatsdk/src/main/cpp/types/libhyphenate'
 
 @Entry
 @Component
@@ -164,10 +163,11 @@ struct ChatPage {
             .onClick(() => {
               SendMessages.sendTextMessage(this.params['conversationId'], this.message, this.params['conversationType'])
                 .then((value) => {
-                  this.messages.push(new ChatMessage(value?.getObject() as EMMessage));
-                  this.isShowSend = false
-                  this.message = '';
-                  this.scroller.scrollEdge(Edge.End)
+                  //TODO  EMMessage 类型转换有问题
+                  // this.messages.push(new ChatMessage(value?.getObject() as EMMessage));
+                  // this.isShowSend = false
+                  // this.message = '';
+                  // this.scroller.scrollEdge(Edge.End)
                 })
 
             })

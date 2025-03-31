@@ -1,4 +1,4 @@
-import { ChatMessage, TextMessageBody, ChatClient, ImageMessageBody, ChatCallback, ChatLog } from '@easemob/chatsdk';
+import { ChatMessage, TextMessageBody, ChatClient, ImageMessageBody, ChatCallback, ChatLog } from '@easemob/chatuikit';
 import { fileUri } from '@kit.CoreFileKit';
 import TimeConversion from '../../../utils/TimeConversion';
 import { router } from '@kit.ArkUI';

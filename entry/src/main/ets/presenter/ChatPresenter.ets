@@ -7,7 +7,7 @@ import { ChatClient,
   CustomMessageBody,
   LoginExtInfo,
   PushListener,
-  TextMessageBody} from '@easemob/chatsdk'
+  TextMessageBody} from '@easemob/chatuikit'
 import EaseConstant from '../utils/EaseConstant'
 import { EventBus } from '../utils/EventBus'
 import dataPreference from '@ohos.data.preferences'

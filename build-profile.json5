@@ -5,13 +5,13 @@
         "name": "default",
         "type": "HarmonyOS",
         "material": {
-          "storePassword": "0000001A42ED6B9415E5B2860D176D4EABDFECF8D8522DAB702E19DD1ED10BD698E7F002ACDC0FB7416B",
-          "certpath": "/Users/liupeng/Downloads/liupeng.cer",
-          "keyAlias": "liupeng",
-          "keyPassword": "0000001AFA905A1819FEDC5F4493F5A65D7016BE614347FB6F10609A52A1A9E678F4D23508EF1616CAED",
-          "profile": "/Users/liupeng/Downloads/liupengDebug (1).p7b",
+          "certpath": "/Users/liupeng/.ohos/config/default_Easemob_3ZmeTXvhRPeQ5LzXehxu28QaP9QVdsMUDlNPU0I_ENA=.cer",
+          "storePassword": "0000001B5C0FCA32A44B65DE4524FD932239BC2F413D7460CB3026787356899E202A86E10FB49B58522EC7",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001B771A0E04A3A23E019DA58EB39A6BF717C86223DCA126FF3D47803889DA852E76BF43070D5AE7B2",
+          "profile": "/Users/liupeng/.ohos/config/default_Easemob_3ZmeTXvhRPeQ5LzXehxu28QaP9QVdsMUDlNPU0I_ENA=.p7b",
           "signAlg": "SHA256withECDSA",
-          "storeFile": "/Users/liupeng/Downloads/liupeng.p12"
+          "storeFile": "/Users/liupeng/.ohos/config/default_Easemob_3ZmeTXvhRPeQ5LzXehxu28QaP9QVdsMUDlNPU0I_ENA=.p12"
         }
       }
     ],

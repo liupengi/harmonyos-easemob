@@ -1,5 +1,5 @@
 import { ChatMessage, TextMessageBody, ChatClient, ImageMessageBody, ChatCallback, ChatLog,
-  VideoMessageBody } from '@easemob/chatsdk';
+  VideoMessageBody } from '@easemob/chatuikit';
 import { fileUri } from '@kit.CoreFileKit';
 import TimeConversion from '../../../utils/TimeConversion';
 

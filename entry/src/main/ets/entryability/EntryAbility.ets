@@ -1,33 +1,20 @@
 import { AbilityConstant, UIAbility, Want } from '@kit.AbilityKit';
 import { hilog } from '@kit.PerformanceAnalysisKit';
 import { router, window } from '@kit.ArkUI';
-import ChatPresenter from '../presenter/ChatPresenter';
-import { ChatLog, ChatOptions } from '@easemob/chatsdk';
-import { ChatClient } from '@easemob/chatsdk';
+import { ChatClient, ChatOptions, ChatUIKitClient } from '@easemob/chatuikit';
 
 export default class EntryAbility extends UIAbility {
 
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onCreate');
-    let chatOption :ChatOptions = new ChatOptions("easemob-demo#support");
-    chatOption.setAutoLogin(true);
-    chatOption.setAutoDownloadThumbnail(true)
-    chatOption.setAppIDForPush("111703463")
-
-    //自定义设备类型
-    // chatOption.setCustomOSPlatform(1)
-    // chatOption.setCustomDeviceName("zidngyide1")
-
-    // 私有化配置
-    // chatOption.setRestServer("http://a1.easemob.com")
-    // chatOption.setIMServer("60.205.128.208")
-    // chatOption.setImPort(6717)
-    ChatClient.getInstance().init(this.context,chatOption);
-
-    let isSdkInited = ChatClient.getInstance().isSdkInited();
-    ChatLog.d(`isSdkInited${isSdkInited}`);
-
-    ChatPresenter.ChatPresenter();
+    let options = new ChatOptions({
+      appKey: 'easemob-demo#support'
+    });
+    let client = ChatClient.getInstance();
+    // 先初始化IM SDK
+    client.init(this.context, options);
+    // 将初始化IM SDK对象传入到ChatUIKit中，并进行ChatUIKit的初始化
+    ChatUIKitClient.init(client);
 
   }
 

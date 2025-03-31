@@ -1,7 +1,6 @@
 import { it } from '@ohos/hypium';
-import { ChatClient, ChatLog, Conversation } from '@easemob/chatsdk';
+import { ChatClient, ChatLog, Conversation } from '@easemob/chatuikit';
 import TimeConversion  from '../../../utils/TimeConversion';
-import { EMTextMessageBody } from '@easemob/chatsdk/src/main/cpp/types/libhyphenate';
 
 //全局公共样式
 @Styles
@@ -87,9 +86,11 @@ export struct ConversationsItem {
 
         Row() {
           if (this.item?.getLatestMessage()?.getType() === 0) {
-            Text((this.item?.getLatestMessage()?.getBody()?.getBody() as EMTextMessageBody).text())
-              .fontSize(20)
-              .fontWeight(FontWeight.Bold)
+
+            // todo  Text((this.item?.getLatestMessage()?.getBody()?.getBody() as EMTextMessageBody).text())
+            // Text((this.item?.getLatestMessage()?.getBody()?.getBody() as EMTextMessageBody).text())
+            //   .fontSize(20)
+            //   .fontWeight(FontWeight.Bold)
           } else if (this.item?.getLatestMessage()?.getType() === 1) {
             Text('[图片消息]')
               .fontSize(20)
