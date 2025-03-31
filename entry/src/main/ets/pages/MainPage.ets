@@ -1,8 +1,5 @@
-import { ContactComponent } from '../view/main/ContactComponent'
 import { MeComponent } from '../view/main/MeComponent'
-import { ConversationsComponent } from '../view/main/ConversationsComponent'
-import UserInfoModel from '../utils/db/UserInfoModel'
-import { ChatClient, ChatLog, ChatPage, ContactListPage, ConversationListPage } from '@easemob/chatuikit'
+import { ContactListPage, ConversationListPage } from '@easemob/chatuikit'
 
 @Entry
 @ComponentV2
