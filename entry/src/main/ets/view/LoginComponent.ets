@@ -1,8 +1,6 @@
 import {ChatClient, ChatError, ChatLog, ChatOptions} from "@easemob/chatuikit";
 import router from '@ohos.router';
 import dataPreference from '@ohos.data.preferences'
-import { EventBus } from '../utils/EventBus';
-import EaseConstant from '../utils/EaseConstant';
 
 @Component
 export struct LoginComponent {

@@ -8,7 +8,6 @@ import { ChatCallback, ChatClient, ChatError, ChatLog, ChatMessage,
   UserInfo} from '@easemob/chatuikit'
 import dataPreference from '@ohos.data.preferences'
 import { router } from '@kit.ArkUI'
-import UserInfoModel from '../../utils/db/UserInfoModel'
 
 //全局公共样式
 @Styles function fillScreen(){
@@ -112,9 +111,7 @@ export struct MeComponent {
 
               ChatLog.d(`获取头像昵称：${value.nickname}--------------${value.avatarUrl}`)
 
-              if (value.userId !== undefined && value.nickname !== undefined && value.avatarUrl !== undefined) {
-                UserInfoModel.addUserInfo(value.userId,value.nickname,value.avatarUrl)
-              }
+
 
 
 
