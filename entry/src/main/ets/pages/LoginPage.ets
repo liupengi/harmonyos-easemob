@@ -4,7 +4,7 @@ import router from '@ohos.router';
 
 @Entry
 @Component
-struct Index {
+struct LoginPage {
   @State context :Context= getContext()
   aboutToAppear(): void {
 

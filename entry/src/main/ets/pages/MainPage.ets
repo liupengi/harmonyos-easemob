@@ -1,5 +1,7 @@
 import { MeComponent } from '../view/main/MeComponent'
 import { ContactListPage, ConversationListPage } from '@easemob/chatuikit'
+import { ConversationsPage } from '../view/main/ConversationsPage';
+import { ContactsPage } from '../view/main/ContactsPage';
 
 @Entry
 @ComponentV2
@@ -10,11 +12,11 @@ struct MainPage {
   build() {
     Navigation(this.pathStack) {
       if (this.pageIndex === 0) {
-        ConversationListPage({
-          pathStack: this.pathStack
+        ConversationsPage({
+          pathStack:this.pathStack
         });
       } else if (this.pageIndex === 1) {
-        ContactListPage({
+        ContactsPage({
           pathStack: this.pathStack
         })
       } else if (this.pageIndex === 2) {
