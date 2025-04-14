@@ -12,6 +12,7 @@ export struct ConversationsPage {
   @Event onBackPress?: () => void = () => {
     this.pathStack?.pop();
   };
+
   @Builder
   myEmptyDataBuilder() {
     Column() {

@@ -2,11 +2,10 @@ import relationalStore from '@ohos.data.relationalStore';
 import { Context } from '@ohos.arkui.UIContext';
 import UserInfo from '../utils/UserInfo';
 import { ValuesBucket } from '@ohos.data.ValuesBucket';
-
+import { ChatLog} from '@easemob/chatuikit'
 class UserInfoModel{
   private rdbStore : relationalStore.RdbStore | undefined = undefined;
   private tableName: string = ''
-
 
   /*
    * 初始化数据库
@@ -44,52 +43,52 @@ class UserInfoModel{
   /*
    * 查询
    * */
-  getUserInfo(userid :string){
+    async getUserInfo(userid :string) : Promise<UserInfo|null>{
     let predicates = new relationalStore.RdbPredicates(this.tableName)
+      predicates.equalTo("USERID",userid)
+    try {
+      // 使用 await 等待查询结果
+      const resultSet = await this.rdbStore?.query(predicates, ['USERID', 'NICKNAME', 'AVATARURL']);
 
-    predicates.equalTo("USERID",userid)
+      if (!resultSet) {
+        ChatLog.d("UserInfoModel: resultSet is null or undefined");
+        return null;
+      }
 
-    this.rdbStore?.query(predicates, ['USERID', 'NICKNAME', 'AVATARURL']).then((resultSet)=>{
-      console.log("UserInfoModel" ,"resultSet columnCount:" + resultSet.rowCount);
+      ChatLog.d("UserInfoModel resultSet rowCount:" + resultSet.rowCount);
 
-      //3.3  指针移动到下一行
-      resultSet?.goToNextRow()
-      // 根据字段名获取字段index，从而获取字段值
-      let getUserid :string = resultSet?.getString(resultSet.getColumnIndex("USERID")) as string
-      let getNickname :string = resultSet?.getString(resultSet.getColumnIndex("NICKNAME"))as string
-      let getAvatarurl :string= resultSet?.getString(resultSet.getColumnIndex("AVATARURL"))as string
-      console.log("UserInfoModel",getUserid+"---"+getNickname+"---"+getAvatarurl)
-      let userInfo:UserInfo = new UserInfo(getUserid,getNickname,getAvatarurl)
-      return userInfo
+      // 检查是否有数据
+      if (resultSet.rowCount === 0) {
+        ChatLog.d("UserInfoModel: No rows found");
+        return null;
+      }
 
-    });
-    return ''
+      // 3.3 指针移动到下一行
+      if (resultSet.goToNextRow()) {
+        // 根据字段名获取字段index，从而获取字段值
+        const getUserid: string = resultSet.getString(resultSet.getColumnIndex("USERID")) || "";
+        const getNickname: string = resultSet.getString(resultSet.getColumnIndex("NICKNAME")) || "";
+        const getAvatarurl: string = resultSet.getString(resultSet.getColumnIndex("AVATARURL")) || "";
 
-    // //1、构建查询条件
-    // let predicates = new relationalStore.RdbPredicates(this.tableName)
-    // //2、查询
-    // let result = await this.rdbStore?.query(predicates, ['USERID', 'NICKNAME', 'AVATARURL'])
-    // //3、解析查询
-    // // 3.1 定义一个数字，组装查到的结果
-    // let userInfo:UserInfo[] = []
-    // //3.2 遍历封装
-    // // 循环遍历结果集，判断是否遍历到最后一行
-    // while (!result?.isAtLastRow){
-    //   //3.3  指针移动到下一行
-    //   result?.goToNextRow()
-    //   //3.4 获取数据
-    //   // 根据字段名获取字段index，从而获取字段值
-    //   let userid :string = result?.getString(result.getColumnIndex("USERID")) as string
-    //   let nickname :string = result?.getString(result.getColumnIndex("NICKNAME"))as string
-    //   let avatarurl :string= result?.getString(result.getColumnIndex("AVATARURL"))as string
-    //
-    //   //3.5 封装数组
-    //   userInfo.push({userid,nickname,avatarurl})
-    //
-    // }
-    // console.log('UserInfoModel', '数据查询成功', JSON.stringify(userInfo))
+        //ChatLog.d("UserInfoModel-----getUserInfo " + getUserid + "---" + getNickname + "---" + getAvatarurl);
+
+        // 创建并返回 UserInfo 对象
+        const userInfo: UserInfo = new UserInfo(getUserid, getNickname, getAvatarurl);
+        return userInfo;
+      } else {
+        ChatLog.d("UserInfoModel: Failed to move to the next row");
+        return null;
+      }
+    } catch (error) {
+
+      return null;
+    }
+
 
   }
+
+
+
 
   /*
    * 新增
@@ -100,11 +99,11 @@ class UserInfoModel{
     predicates.equalTo("USERID",userid)
 
     await this.rdbStore?.query(predicates, ['USERID', 'NICKNAME', 'AVATARURL']).then((resultSet)=>{
-      console.log("UserInfoModel" ,"resultSet columnCount:" + resultSet.rowCount);
+      console.debug("UserInfoModel" ,"resultSet columnCount:" + resultSet.rowCount);
       if (resultSet.rowCount === 0) {
         //如果查询到为0说明没有该数据，插入数据
         this.rdbStore?.insert(this.tableName,{userid,nickname,avatarurl})
-        console.log("UserInfoModel","添加数据成功")
+        console.debug("UserInfoModel","添加数据成功")
       }else {
         //3.3  指针移动到下一行
         resultSet?.goToNextRow()

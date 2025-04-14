@@ -1,6 +1,7 @@
-import {ChatClient, ChatError, ChatLog, ChatOptions} from "@easemob/chatuikit";
+import {ChatClient, ChatError, ChatLog, ChatOptions, UserInfoType} from "@easemob/chatuikit";
 import router from '@ohos.router';
 import dataPreference from '@ohos.data.preferences'
+import UserInfoModel from "../utils/UserInfoModel";
 
 @Component
 export struct LoginComponent {
@@ -62,11 +63,17 @@ export struct LoginComponent {
         $r('app.color.login_btn_enabled') : $r('app.color.login_btn_normal'))
         .onClick(() => {
 
-            ChatClient.getInstance().login(this.userName,this.password).then(()=>{
+            ChatClient.getInstance().login(this.userName,this.password).then(async ()=>{
+
+
+
+
+
+
               router.replaceUrl({
                 url:"pages/MainPage",
               })
-
+              UserInfoModel.initUserInfoDB(getContext(), ChatClient.getInstance().getCurrentUser())
 
 
               dataPreference.getPreferences(getContext(),'easemob')

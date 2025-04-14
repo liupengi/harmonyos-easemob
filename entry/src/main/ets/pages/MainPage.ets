@@ -1,14 +1,148 @@
 import { MeComponent } from '../view/main/MeComponent'
-import { ContactListPage, ConversationListPage } from '@easemob/chatuikit'
+import { ChatClient, ChatError, ContactListPage, ConversationListPage, UserInfoType,ChatUIKitClient, ChatUserProfile,ChatGroupProfile,
+  ChatLog} from '@easemob/chatuikit'
 import { ConversationsPage } from '../view/main/ConversationsPage';
 import { ContactsPage } from '../view/main/ContactsPage';
+import UserInfoModel from '../utils/UserInfoModel';
+import { taskpool } from '@kit.ArkTS';
+import { common } from '@kit.AbilityKit';
+import UserInfo from '../utils/UserInfo';
 
 @Entry
 @ComponentV2
 struct MainPage {
+
   pathStack: NavPathStack = new NavPathStack();
   @Local pageIndex: number = 0;
 
+  onPageShow(): void {
+    ChatLog.d(`================>onPageShow`)
+  }
+
+  async aboutToAppear(): Promise<void> {
+
+
+
+    //
+    // ChatUIKitClient.setProfileProvider({
+    //   fetchProfile: (userId?: string | string[],
+    //     groupId?: string | undefined): Promise<ChatUserProfile | ChatUserProfile[] | ChatGroupProfile> => {
+    //     return new Promise((resolve)=> {
+    //       if (typeof userId === 'undefined') {
+    //         if (groupId) {
+    //           // 处理获取群组信息的逻辑
+    //           let info = new ChatGroupProfile();
+    //           resolve(info);
+    //         }
+    //       } else if (typeof userId === 'string') {
+    //         // 处理获取单个联系人信息的逻辑
+    //         let user = new ChatUserProfile();
+    //         resolve(user);
+    //       } else {
+    //         ChatLog.d(`================>setProfileProvider`)
+    //         // 处理获取多个联系人信息的逻辑
+    //         let result: ChatUserProfile[] = [];
+    //         for (let index = 0; index < userId.length; index++) {
+    //           const userid = userId[index];
+    //           ChatLog.d(`================>setProfileProvider------>${userid}`)
+    //         // let userInfo :UserInfo = UserInfoModel.getUserInfo(userid)
+    //           let user = new ChatUserProfile();
+    //           user.id = userid;
+    //           user.name = "测试昵称展示"
+    //           user.avatar ="https://accktvpic.oss-cn-beijing.aliyuncs.com/pic/sample_avatar/sample_avatar_4.png"
+    //          // ChatLog.d(`================>${userInfo.nickname}===========${userInfo.avatarurl}`)
+    //           result.push(user)
+    //         }
+    //         resolve(result);
+    //       }
+    //     })
+    //   }
+    // })
+
+    ChatUIKitClient.setProfileProvider({
+      fetchProfile: (userId?: string | string[],
+        groupId?: string | undefined): Promise<ChatUserProfile | ChatUserProfile[] | ChatGroupProfile> => {
+        return new Promise((resolve)=> {
+
+
+          if (typeof userId === 'undefined') {
+            if (groupId) {
+              // 处理获取群组信息的逻辑
+
+              let info = new ChatGroupProfile();
+
+              resolve(info);
+            }
+          } else if (typeof userId === 'string') {
+            ChatLog.d("setProfileProvider--------->====")
+            UserInfoModel.getUserInfo(userId).then((value)=>{
+              let user = new ChatUserProfile();
+              user.id = value?.userid;
+              user.name = value?.avatarurl
+              user.avatar = value?.nickname
+              resolve(user);
+            })
+
+
+
+
+
+
+
+
+          } else {
+            // 处理获取多个联系人信息的逻辑
+            let result: ChatUserProfile[] = [];
+            for (let index = 0; index < userId.length; index++) {
+              const userid = userId[index];
+              UserInfoModel.getUserInfo(userid).then((value)=>{
+                let user = new ChatUserProfile();
+                user.id = value?.userid;
+                user.name = value?.nickname
+                user.avatar = value?.avatarurl
+                result.push(user)
+                ChatLog.d("setProfileProvider--------->getUserInfo"+value?.nickname+"----"+value?.avatarurl+"-----"+value?.userid)
+              })
+            }
+
+            resolve(result);
+          }
+        })
+      }
+    })
+
+
+    // let userIds = new Array<string>();
+    //
+    // let result = ChatClient.getInstance().chatManager()?.getAllConversationsBySort();
+    //
+    // result?.forEach((value)=>{
+    //   userIds.push(value.conversationId());
+    // })
+    //
+    // let userTypes = new Array<UserInfoType>();
+    // userTypes.push(UserInfoType.NICKNAME);
+    // userTypes.push(UserInfoType.AVATAR_URL);
+    // ChatClient.getInstance().userInfoManager()?.fetchUserInfoById(userIds, userTypes).then(result => {
+    //   result.forEach((value)=>{
+    //     if (value.userId) {
+    //       UserInfoModel.addUserInfo(value.userId,value.nickname+"",value.avatarUrl+"")
+    //     }
+    //
+    //   })
+    //
+    // }).catch((e: ChatError) => {
+    //   // failure logic
+    // });
+
+    // taskpool.execute(concurrentTest, this.getUIContext).then(() => {
+    //   // 调度结果处理
+    //   console.info("taskpool: execute success")
+    // })
+
+
+
+  }
   build() {
     Navigation(this.pathStack) {
       if (this.pageIndex === 0) {

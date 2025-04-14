@@ -19,6 +19,8 @@ export default class EntryAbility extends UIAbility {
     // 将初始化IM SDK对象传入到ChatUIKit中，并进行ChatUIKit的初始化
     ChatUIKitClient.init(client);
 
+
+
   }
 
 
