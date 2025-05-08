@@ -40,6 +40,7 @@ class UserInfoModel{
       console.log("UserInfoModel",'创建UserInfoModel成功')
       // 保存rdbStore
       this.rdbStore = rdbStore
+
     })
   }
 
