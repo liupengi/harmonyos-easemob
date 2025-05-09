@@ -1,9 +1,6 @@
 {
   "src": [
-    "pages/Index",
-    "pages/MainPage",
-    "pages/ChatPage",
-    "pages/GroupListPage",
-    "pages/BigShowPage"
+    "pages/LoginPage",
+    "pages/MainPage"
   ]
 }

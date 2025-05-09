@@ -1,9 +1,7 @@
 import relationalStore from '@ohos.data.relationalStore';
 import { Context } from '@ohos.arkui.UIContext';
-import UserInfo from '../bean/UserInfo';
+import UserInfo from '../utils/UserInfo';
 import { ValuesBucket } from '@ohos.data.ValuesBucket';
-import { ChatClient } from '@easemob/chatsdk';
-
 
 class UserInfoModel{
   private rdbStore : relationalStore.RdbStore | undefined = undefined;
@@ -46,23 +44,23 @@ class UserInfoModel{
   /*
    * 查询
    * */
-   getUserInfo(userid :string){
+  getUserInfo(userid :string){
     let predicates = new relationalStore.RdbPredicates(this.tableName)
 
     predicates.equalTo("USERID",userid)
 
-     this.rdbStore?.query(predicates, ['USERID', 'NICKNAME', 'AVATARURL']).then((resultSet)=>{
+    this.rdbStore?.query(predicates, ['USERID', 'NICKNAME', 'AVATARURL']).then((resultSet)=>{
       console.log("UserInfoModel" ,"resultSet columnCount:" + resultSet.rowCount);
 
-        //3.3  指针移动到下一行
-        resultSet?.goToNextRow()
-        // 根据字段名获取字段index，从而获取字段值
-        let getUserid :string = resultSet?.getString(resultSet.getColumnIndex("USERID")) as string
-        let getNickname :string = resultSet?.getString(resultSet.getColumnIndex("NICKNAME"))as string
-        let getAvatarurl :string= resultSet?.getString(resultSet.getColumnIndex("AVATARURL"))as string
-        console.log("UserInfoModel",getUserid+"---"+getNickname+"---"+getAvatarurl)
+      //3.3  指针移动到下一行
+      resultSet?.goToNextRow()
+      // 根据字段名获取字段index，从而获取字段值
+      let getUserid :string = resultSet?.getString(resultSet.getColumnIndex("USERID")) as string
+      let getNickname :string = resultSet?.getString(resultSet.getColumnIndex("NICKNAME"))as string
+      let getAvatarurl :string= resultSet?.getString(resultSet.getColumnIndex("AVATARURL"))as string
+      console.log("UserInfoModel",getUserid+"---"+getNickname+"---"+getAvatarurl)
       let userInfo:UserInfo = new UserInfo(getUserid,getNickname,getAvatarurl)
-       return userInfo
+      return userInfo
 
     });
     return ''
@@ -99,9 +97,9 @@ class UserInfoModel{
   async addUserInfo(userid :string,nickname :string,avatarurl :string){
     let predicates = new relationalStore.RdbPredicates(this.tableName)
 
-     predicates.equalTo("USERID",userid)
+    predicates.equalTo("USERID",userid)
 
-      await this.rdbStore?.query(predicates, ['USERID', 'NICKNAME', 'AVATARURL']).then((resultSet)=>{
+    await this.rdbStore?.query(predicates, ['USERID', 'NICKNAME', 'AVATARURL']).then((resultSet)=>{
       console.log("UserInfoModel" ,"resultSet columnCount:" + resultSet.rowCount);
       if (resultSet.rowCount === 0) {
         //如果查询到为0说明没有该数据，插入数据
@@ -125,7 +123,7 @@ class UserInfoModel{
       }
     });
 
-    
+
 
 
   }
@@ -141,7 +139,7 @@ class UserInfoModel{
     let predicates = new relationalStore.RdbPredicates(this.tableName)
     predicates.equalTo('USERID',userid)
     // 更新操作
-   return this.rdbStore?.update( date ,predicates)
+    return this.rdbStore?.update( date ,predicates)
   }
 
   /*

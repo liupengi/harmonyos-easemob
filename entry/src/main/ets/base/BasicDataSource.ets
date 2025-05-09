@@ -1,5 +1,5 @@
 // Basic implementation of IDataSource to handle data listener
-import { Group } from '@easemob/chatsdk';
+import { Group } from '@easemob/chatuikit';
 
 export  class BasicDataSource implements IDataSource {
   private listeners: DataChangeListener[] = [];
