@@ -7,6 +7,7 @@ import { ChatCallback, ChatClient, ChatError, ChatLog, ChatMessage,
   ImageMessageBody,
   MessageExtType,
   SearchDirection,
+  TextMessageBody,
   UserInfo} from '@easemob/chatsdk'
 import dataPreference from '@ohos.data.preferences'
 import { router } from '@kit.ArkUI'
@@ -144,7 +145,7 @@ export struct MeComponent {
             let list = result.getResult();
             list.forEach((list) => {
               if (list.getType() === 1) {
-                ChatLog.d("fetchHistoryMessages------->消息类型为图片类型")
+
                 let imageMessages :ImageMessageBody = (list.getBody() as ImageMessageBody)
                 let status =  imageMessages.getThumbnailDownloadStatus()
                 ChatLog.d("fetchHistoryMessages------->附件下载状态："+status)
@@ -169,8 +170,41 @@ export struct MeComponent {
 
 
         })
-      Button("测试按钮")
+      Button("从服务端获取")
         .onClick(()=>{
+          let fetch :FetchMessageOption = new FetchMessageOption()
+          fetch.setIsSave(true)
+          fetch.setDirection(SearchDirection.DOWN)
+
+          ChatClient.getInstance().chatManager()?.fetchHistoryMessages("lp1", ConversationType.Chat, 20, "",fetch).then((result) => {
+            let cursor = result.getNextCursor();
+            let list = result.getResult();
+            list.forEach((list) => {
+              if (list.getType() === 0) {
+
+                let textMessages: TextMessageBody = (list.getBody() as TextMessageBody)
+                ChatLog.d(`textMessages------${textMessages.getContent()}`)
+              }
+
+
+
+            })
+          })
+
+        })
+      Button("从本地获取")
+        .onClick(()=>{
+          ChatClient.getInstance().chatManager()?.getConversation("lp1")?.loadMoreMessagesFromDB("", 50, SearchDirection.DOWN).then(messages => {
+            messages.forEach((message)=>{
+              if (message.getType() === 0) {
+
+                let textMessages: TextMessageBody = (message.getBody() as TextMessageBody)
+                ChatLog.d(`textMessages------${textMessages.getContent()}`)
+              }
+
+
+            })
+          })
 
 
         })
@@ -261,11 +295,7 @@ export struct MeComponent {
 
 
 
-          // ChatClient.getInstance().chatManager()?.getConversation("wf1")?.loadMoreMessagesFromDB("", 50, SearchDirection.UP).then(messages => {
-          //   messages.forEach((message)=>{
-          //     ChatLog.d(`loadMoreMessagesFromDB------>${message.isReceiverRead()}`)
-          //   })
-          // })
+
 
 
 
