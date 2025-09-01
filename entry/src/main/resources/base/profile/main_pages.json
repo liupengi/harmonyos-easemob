@@ -4,6 +4,7 @@
     "pages/MainPage",
     "pages/ChatPage",
     "pages/GroupListPage",
-    "pages/BigShowPage"
+    "pages/BigShowPage",
+    "pages/TestPage"
   ]
 }

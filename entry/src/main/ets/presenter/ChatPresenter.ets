@@ -39,6 +39,12 @@ class ChatPresenter {
         EventBus.send(EaseConstant.connected_change)
 
         messages.forEach((messages) => {
+          messages.ext().forEach((value,key) => {
+            ChatLog.d(`解析消息的扩展字段----->${JSON.stringify(value)}------${key}`)
+          })
+
+
+
           Notification.SendNotification(messages.getFrom(),(messages.getBody() as TextMessageBody).getContent())
           EventBus.send(EaseConstant.message_change,messages.getMsgId())
 

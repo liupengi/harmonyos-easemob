@@ -32,6 +32,7 @@ export struct MeComponent {
   aboutToAppear(): void {
     ChatClient.getInstance().userInfoManager()?.fetchUserInfoById(ChatClient.getInstance().getCurrentUser()).then((value)=>{
       value.forEach((value)=>{
+        ChatLog.d(`获取头像昵称：${value.nickname}--------------${value.avatarUrl}`)
        this.avatarUrl = value.avatarUrl
        this.nickname = value.nickname
       })
@@ -98,9 +99,15 @@ export struct MeComponent {
             }
           })
         })
-      Button('下载缩略图')
+      Button('webview 测试')
 
         .onClick(()=>{
+
+          router.replaceUrl({
+            url:"pages/TestPage",
+          })
+
+
 
           // // 获取一个或多个用户的所有属性，一次调用用户 ID 数量不超过 100。
           // let contact = ChatClient.getInstance().contactManager()?.getContactsFromLocal().then(result=>{
@@ -137,35 +144,35 @@ export struct MeComponent {
           // ChatClient.getInstance().chatManager()?.downloadThumbnail(ChatClient.getInstance().chatManager()?.getMessage("1366095022797096368"))
 
 
-          let fetch :FetchMessageOption = new FetchMessageOption()
-          fetch.setIsSave(true)
-
-          ChatClient.getInstance().chatManager()?.fetchHistoryMessages("lp2", ConversationType.Chat, 1, "1111111",fetch).then((result) => {
-            let cursor = result.getNextCursor();
-            let list = result.getResult();
-            list.forEach((list) => {
-              if (list.getType() === 1) {
-
-                let imageMessages :ImageMessageBody = (list.getBody() as ImageMessageBody)
-                let status =  imageMessages.getThumbnailDownloadStatus()
-                ChatLog.d("fetchHistoryMessages------->附件下载状态："+status)
-                  let callback: ChatCallback = {
-                    onSuccess: (): void => {
-                      ChatLog.d("fetchHistoryMessages------->下载成功")
-                    },
-                    onError: (code: number, error: string): void => {
-                      ChatLog.d("fetchHistoryMessages------->下载失败"+code+"----"+error)
-                    },
-                    onProgress: (progress: number): void => {
-                      ChatLog.d("fetchHistoryMessages------->下载进度"+progress)
-                    }
-                  }
-                  list.setMessageStatusCallback(callback);
-                ChatLog.d("fetchHistoryMessages22------->附件下载状态："+status)
-              }
-
-            })
-          })
+          // let fetch :FetchMessageOption = new FetchMessageOption()
+          // fetch.setIsSave(true)
+          //
+          // ChatClient.getInstance().chatManager()?.fetchHistoryMessages("lp2", ConversationType.Chat, 1, "1111111",fetch).then((result) => {
+          //   let cursor = result.getNextCursor();
+          //   let list = result.getResult();
+          //   list.forEach((list) => {
+          //     if (list.getType() === 1) {
+          //
+          //       let imageMessages :ImageMessageBody = (list.getBody() as ImageMessageBody)
+          //       let status =  imageMessages.getThumbnailDownloadStatus()
+          //       ChatLog.d("fetchHistoryMessages------->附件下载状态："+status)
+          //         let callback: ChatCallback = {
+          //           onSuccess: (): void => {
+          //             ChatLog.d("fetchHistoryMessages------->下载成功")
+          //           },
+          //           onError: (code: number, error: string): void => {
+          //             ChatLog.d("fetchHistoryMessages------->下载失败"+code+"----"+error)
+          //           },
+          //           onProgress: (progress: number): void => {
+          //             ChatLog.d("fetchHistoryMessages------->下载进度"+progress)
+          //           }
+          //         }
+          //         list.setMessageStatusCallback(callback);
+          //       ChatLog.d("fetchHistoryMessages22------->附件下载状态："+status)
+          //     }
+          //
+          //   })
+          // })
 
 
 

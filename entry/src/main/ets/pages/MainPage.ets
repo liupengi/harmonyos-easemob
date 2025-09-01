@@ -45,6 +45,7 @@ struct MainPage {
   }
 
   onPageShow(): void {
+    ChatClient.getInstance().isSdkInited()
     this.show = true
     console.info("MainPage========onPageShow========")
   }
