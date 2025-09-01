@@ -15,8 +15,8 @@ export default class EntryAbility extends UIAbility {
     chatOption.setAppIDForPush("111703463")
 
     //自定义设备类型
-    // chatOption.setCustomOSPlatform(1)
-    // chatOption.setCustomDeviceName("zidngyide1")
+    //chatOption.setCustomOSPlatform(5)
+    chatOption.setCustomDeviceName("asdsadsdsad")
 
     // 私有化配置
     // chatOption.setRestServer("http://a1.easemob.com")
@@ -24,8 +24,7 @@ export default class EntryAbility extends UIAbility {
     // chatOption.setImPort(6717)
     ChatClient.getInstance().init(this.context,chatOption);
 
-    let isSdkInited = ChatClient.getInstance().isSdkInited();
-    ChatLog.d(`isSdkInited${isSdkInited}`);
+
 
     ChatPresenter.ChatPresenter();
 
