@@ -40,15 +40,11 @@ class ChatPresenter {
         EventBus.send(EaseConstant.connected_change)
         messages.forEach((messages) => {
 
-          ChatLog.d(`数据解析问题排查--attachment---${JSON.parse("attachment")}`)
+          let ext: Map<string, MessageExtType> = messages.ext()
 
+          let attachment  = ext.get("attachment") as string
 
-          ChatLog.d(`数据解析问题排查${JSON.stringify(messages.ext())}`)
-
-
-          messages.ext().forEach((value,key) => {
-            ChatLog.d(`解析消息的扩展字段----->${JSON.stringify(value)}------${key}`)
-          })
+          ChatLog.d(`数据解析问题排查--attachment---${attachment}`)
 
 
 
