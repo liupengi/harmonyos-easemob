@@ -16,8 +16,8 @@ export default class EntryAbility extends UIAbility {
 
     
     //自定义设备类型
-    chatOption.setCustomOSPlatform(1)
-    chatOption.setCustomDeviceName("zidngyide1")
+    // chatOption.setCustomOSPlatform(1)
+    // chatOption.setCustomDeviceName("zidngyide1")
 
     // 私有化配置
     // chatOption.setRestServer("http://a1.easemob.com")

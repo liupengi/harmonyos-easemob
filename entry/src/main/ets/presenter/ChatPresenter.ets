@@ -6,6 +6,7 @@ import { ChatClient,
   ConversationListener,
   CustomMessageBody,
   LoginExtInfo,
+  MessageExtType,
   PushListener,
   TextMessageBody} from '@easemob/chatsdk'
 import EaseConstant from '../utils/EaseConstant'
@@ -37,8 +38,14 @@ class ChatPresenter {
     this.msgListener = {
       onMessageReceived: (messages: ChatMessage[]): void => {
         EventBus.send(EaseConstant.connected_change)
-
         messages.forEach((messages) => {
+
+          ChatLog.d(`数据解析问题排查--attachment---${JSON.parse("attachment")}`)
+
+
+          ChatLog.d(`数据解析问题排查${JSON.stringify(messages.ext())}`)
+
+
           messages.ext().forEach((value,key) => {
             ChatLog.d(`解析消息的扩展字段----->${JSON.stringify(value)}------${key}`)
           })
