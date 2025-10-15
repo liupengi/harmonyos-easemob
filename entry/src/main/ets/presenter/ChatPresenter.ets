@@ -46,7 +46,13 @@ class ChatPresenter {
 
           ChatLog.d(`数据解析问题排查--attachment---${attachment}`)
 
-
+          messages.ext().forEach((value,key) => {
+            ChatLog.e('解析消息的扩展字段=='+value)
+            if (typeof value === 'object') {
+              ChatLog.e('解析消息的扩展字段=='+value)
+            }
+            ChatLog.d(`解析消息的扩展字段----->${JSON.stringify(value)}------${key}`)
+          })
 
           Notification.SendNotification(messages.getFrom(),(messages.getBody() as TextMessageBody).getContent())
           EventBus.send(EaseConstant.message_change,messages.getMsgId())
