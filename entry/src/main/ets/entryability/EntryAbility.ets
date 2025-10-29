@@ -23,6 +23,7 @@ export default class EntryAbility extends UIAbility {
     // chatOption.setRestServer("http://a1.easemob.com")
     // chatOption.setIMServer("60.205.128.208")
     // chatOption.setImPort(6717)
+
     ChatClient.getInstance().init(this.context,chatOption);
 
     let isSdkInited = ChatClient.getInstance().isSdkInited();

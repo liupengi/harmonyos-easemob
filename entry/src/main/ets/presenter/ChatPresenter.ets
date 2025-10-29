@@ -57,6 +57,7 @@ class ChatPresenter {
           Notification.SendNotification(messages.getFrom(),(messages.getBody() as TextMessageBody).getContent())
           EventBus.send(EaseConstant.message_change,messages.getMsgId())
 
+
         })
       },
       onCmdMessageReceived:(messages:ChatMessage[]):void=>{
