@@ -2,6 +2,10 @@
 import { media } from '@kit.MediaKit';
 import { BusinessError, systemDateTime } from '@kit.BasicServicesKit';
 import fs from '@ohos.file.fs';
+import { ChatLog } from '@easemob/chatsdk';
+import { FileTracker } from '../FileTracker';
+import { FsWrapper } from '../FsWrapper';
+
 class AudioRecorder {
   private avRecorder: media.AVRecorder | undefined = undefined;
   public maxAmplitude: number = 0;
@@ -25,11 +29,11 @@ class AudioRecorder {
     if (this.avRecorder !== undefined) {
       // 状态机变化回调函数
       this.avRecorder.on('stateChange', (state: media.AVRecorderState, _: media.StateChangeReason) => {
-        console.log(`AudioRecorder current state is ${state}`);
+        ChatLog.d(`AudioRecorder current state is ${state}`);
       })
       // 错误上报回调函数
       this.avRecorder.on('error', (err: BusinessError) => {
-        console.error(`AudioRecorder failed, code is ${err.code}, message is ${err.message}`);
+        ChatLog.d(`AudioRecorder failed, code is ${err.code}, message is ${err.message}`);
       })
     }
   }
@@ -50,7 +54,11 @@ class AudioRecorder {
     let currentTimeMillis: number = new Date().getTime();
     const filepath = path + '/' + currentTimeMillis + '.wav';
     this.audioPath = filepath
-    const file = fs.openSync(filepath, fs.OpenMode.READ_WRITE | fs.OpenMode.CREATE);
+    
+    // 跟踪文件打开
+    const fileTracker = FileTracker.getInstance();
+    const fileId = fileTracker.trackFileOpen();
+    const file = FsWrapper.openSync(filepath, fs.OpenMode.READ_WRITE | fs.OpenMode.CREATE);
     const fdNumber = file.fd;
     this.avConfig.url = 'fd://' + fdNumber;
     // 3.配置录制参数完成准备工作
@@ -86,6 +94,10 @@ class AudioRecorder {
       // 3.释放录制实例
       await this.avRecorder.release();
       this.avRecorder = undefined;
+      
+      // 跟踪文件关闭
+      const fileTracker = FileTracker.getInstance();
+      fileTracker.trackFileClose();
     }
   }
 }
