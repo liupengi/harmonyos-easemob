@@ -3,8 +3,6 @@ import { media } from '@kit.MediaKit';
 import { BusinessError, systemDateTime } from '@kit.BasicServicesKit';
 import fs from '@ohos.file.fs';
 import { ChatLog } from '@easemob/chatsdk';
-import { FileTracker } from '../FileTracker';
-import { FsWrapper } from '../FsWrapper';
 
 class AudioRecorder {
   private avRecorder: media.AVRecorder | undefined = undefined;
@@ -56,11 +54,11 @@ class AudioRecorder {
     this.audioPath = filepath
     
     // 跟踪文件打开
-    const fileTracker = FileTracker.getInstance();
-    const fileId = fileTracker.trackFileOpen();
-    const file = FsWrapper.openSync(filepath, fs.OpenMode.READ_WRITE | fs.OpenMode.CREATE);
-    const fdNumber = file.fd;
-    this.avConfig.url = 'fd://' + fdNumber;
+    // const fileTracker = FileTracker.getInstance();
+    // const fileId = fileTracker.trackFileOpen();
+    // const file = FsWrapper.openSync(filepath, fs.OpenMode.READ_WRITE | fs.OpenMode.CREATE);
+    // const fdNumber = file.fd;
+
     // 3.配置录制参数完成准备工作
     await this.avRecorder.prepare(this.avConfig);
     // 4.开始录制
@@ -95,9 +93,7 @@ class AudioRecorder {
       await this.avRecorder.release();
       this.avRecorder = undefined;
       
-      // 跟踪文件关闭
-      const fileTracker = FileTracker.getInstance();
-      fileTracker.trackFileClose();
+
     }
   }
 }

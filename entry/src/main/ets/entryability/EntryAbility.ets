@@ -9,7 +9,7 @@ export default class EntryAbility extends UIAbility {
 
   onCreate(want: Want, launchParam: AbilityConstant.LaunchParam): void {
     hilog.info(0x0000, 'testTag', '%{public}s', 'Ability onCreate');
-    let chatOption :ChatOptions = new ChatOptions("easemob-demo#support");
+    let chatOption :ChatOptions = new ChatOptions("1137220225110285#demo");
     chatOption.setAutoLogin(true);
     chatOption.setAutoDownloadThumbnail(true)
     chatOption.setAppIDForPush("111703463")
@@ -20,9 +20,9 @@ export default class EntryAbility extends UIAbility {
     // chatOption.setCustomDeviceName("zidngyide1")
 
     // 私有化配置
-    // chatOption.setRestServer("http://a1.easemob.com")
-    // chatOption.setIMServer("60.205.128.208")
-    // chatOption.setImPort(6717)
+    chatOption.setRestServer("http://a1.easemob.com")
+    chatOption.setIMServer("60.205.128.208")
+    chatOption.setImPort(6717)
     ChatClient.getInstance().init(this.context,chatOption);
 
     let isSdkInited = ChatClient.getInstance().isSdkInited();

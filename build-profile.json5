@@ -6,9 +6,9 @@
         "type": "HarmonyOS",
         "material": {
           "certpath": "/Users/liupeng/.ohos/config/default_Easemob_3ZmeTXvhRPeQ5LzXehxu28QaP9QVdsMUDlNPU0I_ENA=.cer",
-          "storePassword": "0000001BA9F9E8E6A9BD12A5DB33A256F61B5BD6DFE70C0096A683D3D0B86C86F37FB8AC26A25DC9796BDF",
+          "storePassword": "0000001BF45ADD09458F5ABA7798509F45BFFF041DF7E2FFD03E2D2B98920930ADDE8F694F105CBCD45744",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001B5D23BCA0F3D7C573337F0EE463D77DEB32153D77AC9B1EF7E897D9250C47F3A67C95E97AE1CCDD",
+          "keyPassword": "0000001B0EBD5E726A8A9BC15A075849443E466E4EF889F410A8CBB31DF28CC39AEF79B688F38D41486DFE",
           "profile": "/Users/liupeng/.ohos/config/default_Easemob_3ZmeTXvhRPeQ5LzXehxu28QaP9QVdsMUDlNPU0I_ENA=.p7b",
           "signAlg": "SHA256withECDSA",
           "storeFile": "/Users/liupeng/.ohos/config/default_Easemob_3ZmeTXvhRPeQ5LzXehxu28QaP9QVdsMUDlNPU0I_ENA=.p12"
