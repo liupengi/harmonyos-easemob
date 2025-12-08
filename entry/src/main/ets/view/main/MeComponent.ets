@@ -64,9 +64,6 @@ export struct MeComponent {
       Button('退出登录')
         .margin({top:300})
         .onClick(()=>{
-          ChatClient.getInstance().chatManager()?.getConversation("")?.searchMessagesFromDB()
-
-
           ChatClient.getInstance().logout(true).then(()=>{
             dataPreference.getPreferences(getContext(),'easemob')
               .then( preferences=>{
